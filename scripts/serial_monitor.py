@@ -17,7 +17,9 @@ if __name__ == "__main__":
     parser.add_argument('--port', help='port', type=str, default="/dev/ttyACM0")
     parser.add_argument('--vws', help='viewing window size (s)', type=int, default=10)
     parser.add_argument('--out', help='an optional output file', type=str, default=os.devnull)
+    # parser.add_argument('--print', help='stdout?', type=bool, default=False)
 
+    scale = True
     args = parser.parse_args()
 
     arg_dict = vars(args)
@@ -40,12 +42,16 @@ if __name__ == "__main__":
 
     with open(arg_dict["out"], "w") as f:
         while True:
+
             line = serial_port.readline()
+            print line
             try:
-                value = int(line.rstrip())
-            except ValueError:
+                int_value = int(line.rstrip())
+            except ValueError as e:
+                print e
                 continue
-            value /= float(2 ** 10)
+            value = int_value  / float(2 ** 10)
+
             dt = time.time() -start
 
             time_queue.append(dt)
@@ -65,8 +71,15 @@ if __name__ == "__main__":
             new_t = new_t
             new_y = ifun(new_t)
 
+
+
+            if scale:
+                new_y -= np.min(new_y)
+                new_y /= np.max(new_y)
+
             new_y *= height
             new_y = height - new_y
+
             new_t -= new_t[0]
             new_t *= (width/float(window_size))
             pts = [(int(x),int(y)) for x,y in zip(new_t, new_y)]
@@ -74,5 +87,7 @@ if __name__ == "__main__":
             pygame.draw.lines(screen, (255,255,0),False, pts, 3)
             pygame.display.flip()
             f.write("%f, %f\n" % (dt,value))
-            
+            if True:
+                print "%02f, %i" % (np.round(dt,2),int_value)
+
 

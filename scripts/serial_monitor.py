@@ -15,7 +15,7 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', help='port', type=str, default="/dev/ttyACM0")
-    parser.add_argument('--vws', help='viewing window size (s)', type=int, default=10)
+    parser.add_argument('--vws', help='viewing window size (s)', type=int, default=20)
     parser.add_argument('--out', help='an optional output file', type=str, default=os.devnull)
     # parser.add_argument('--print', help='stdout?', type=bool, default=False)
 
@@ -38,20 +38,21 @@ if __name__ == "__main__":
 
     width, height = 1000, 500
     screen = pygame.display.set_mode((width, height))
-
+    
 
     with open(arg_dict["out"], "w") as f:
         while True:
-
             line = serial_port.readline()
             print line
+            if line == "":
+                continue
             try:
                 int_value = int(line.rstrip())
+                
             except ValueError as e:
                 print e
                 continue
-            value = int_value  / float(2 ** 10)
-
+            value = int_value  / float(2 ** 16)
             dt = time.time() -start
 
             time_queue.append(dt)
@@ -61,20 +62,24 @@ if __name__ == "__main__":
             while time_queue[-1] - time_queue[0] > window_size:
                 time_queue.popleft()
                 value_queue.popleft()
-
+            
             t = np.array(time_queue)
             y = np.array(value_queue)
 
-            ifun = interp1d(t,y, "linear")
-            new_t = np.linspace(t[0], t[-1], num=_N_POINTS)
-
-            new_t = new_t
-            new_y = ifun(new_t)
-
+            #~ ifun = interp1d(t,y, "linear")
+            #~ new_t = np.linspace(t[0], t[-1], num=_N_POINTS)
+#~ 
+            #~ new_t = new_t
+            #~ new_y = ifun(new_t)
+            new_t = t
+            new_y = y
 
 
             if scale:
                 new_y -= np.min(new_y)
+                mmax = np.max(new_y)
+                if mmax == 0:
+                    continue
                 new_y /= np.max(new_y)
 
             new_y *= height

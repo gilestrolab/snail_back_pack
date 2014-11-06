@@ -8,8 +8,8 @@
    delay() statement. */
  
 #define inPin0 0
-#define  OVER_SAMPLING 5.
-#define  FS 5.
+#define  OVER_SAMPLING 10.
+#define  FS 10.
  
 void setup(void) {
    Serial.begin(9600);     
@@ -23,7 +23,10 @@ void loop(void) {
 		accum += pinRead0;
 		delay(1000.0/(FS*OVER_SAMPLING));
 	}
-	int out = (int) accum / OVER_SAMPLING;
+	// convert to 16bit (because oversampled)
+	int fac = 2 ^ 6;
+	
+	int out =  fac * accum / OVER_SAMPLING;
 	Serial.print(out);
 	Serial.println();
 	

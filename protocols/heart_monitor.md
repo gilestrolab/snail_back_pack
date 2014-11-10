@@ -61,10 +61,11 @@ The PCB header
 The idea is to be able to connect and disconect conveniently the circuit to the arduino by fixing the header on the shell and pluggin the wires, though the socket, on demand.
 I suggest to cut the header in order to keep only three pins on each side (which is more than needed for out purpose).
 So, A schematic from the bottom could look like that:
-
+```
 A ---   --- D
 B ---   --- E
 C ---   --- F
+```
 
 We are going to solder the LED anode and cathode to A and C, respecitely.
 Then, the + side of the phototransistor to D, the ground to F, and the analog output to E.

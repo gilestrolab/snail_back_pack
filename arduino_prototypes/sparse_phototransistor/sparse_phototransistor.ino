@@ -7,36 +7,54 @@
    rate by simply changing the argument of the
    delay() statement. */
  
-#define IN_PIN 0
+#define N_ANALOG_INPUT_PINS 5
 #define OVER_SAMPLING 3.
 #define FS 5.
 #define POWER_PIN 13
 #define RISE_TIME_PHOTOTRANSISTOR 1// ms
- 
+
+int accum_ar[N_ANALOG_INPUT_PINS];
+
 void setup(void) {
-	Serial.begin(9600); 
+	Serial.begin(57600); 
 	pinMode(POWER_PIN, OUTPUT);    
+	
 }
 
 int read(void){
-	int accum = 0; 
+	
+	for(int j =0; j < N_ANALOG_INPUT_PINS; j++){
+		accum_ar[j] = 0;
+	}
+	
 	for(int i =0; i < OVER_SAMPLING; i++){
 		digitalWrite(POWER_PIN, HIGH);
 		delay(RISE_TIME_PHOTOTRANSISTOR);
-		int pinRead0 = analogRead(IN_PIN);
+		
+		for(int j =0; j < N_ANALOG_INPUT_PINS; j++){
+			
+			int pinRead = analogRead(j);
+			accum_ar[j] = pinRead;
+		}		
+				
 		digitalWrite(POWER_PIN, LOW);   
-		accum += pinRead0;
 		
 		float to_sleep_us = 1e6/(FS*OVER_SAMPLING) ;
 		delay(1e-3 * to_sleep_us - RISE_TIME_PHOTOTRANSISTOR) ;
 	}
-	//int out =  accum / OVER_SAMPLING;
-	return accum;
 }
 void loop(void) {
   
+	read();
 	
-	Serial.print(read());
-	Serial.println();
+	
+	for(int j =0; j != N_ANALOG_INPUT_PINS; j++){
+		
+		Serial.print(accum_ar[j]);
+		Serial.print(",");
+	}
+	
+	
+	Serial.print("\n");
 	
 }

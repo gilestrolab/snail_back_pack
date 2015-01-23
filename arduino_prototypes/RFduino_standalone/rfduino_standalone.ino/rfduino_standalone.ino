@@ -1,33 +1,38 @@
-/* Here is a bare-bones Arduino sketch to read the
-   outputs of the photodiode detectors described
-   in Figure 1 and Figure 2. The output pin of the
-   circuit's opamp is connected to analog pin 0
-   of the Arduino. The data are read every 0.1 second
-   in this example. However, you can change the sampling
-   rate by simply changing the argument of the
-   delay() statement. */
+/* */
  
-#define inPin0 0
-#define  OVER_SAMPLING 10.
-#define  FS 10.
- 
+
+#define OVER_SAMPLING 5.
+#define FS 3.
+#define POWER_PIN 2
+#define RISE_TIME_PHOTOTRANSISTOR 5// ms
+#define PHOTO_TRANSISTOR_PIN 1
+
+
+
 void setup(void) {
-   Serial.begin(9600);     
+	Serial.begin(57600); 
+	pinMode(POWER_PIN, OUTPUT);    
+	
 }
- 
+
+
 void loop(void) {
   
-	float accum = 0; 
-	for(int i =0; i !=OVER_SAMPLING; ++i){
-		int pinRead0 = analogRead(inPin0);
-		accum += pinRead0;
-		delay(1000.0/(FS*OVER_SAMPLING));
+        uint accum = 0;
+	for(int i =0; i < OVER_SAMPLING; i++){
+		digitalWrite(POWER_PIN, HIGH);
+		delay(RISE_TIME_PHOTOTRANSISTOR);
+		accum +=  analogRead(PHOTO_TRANSISTOR_PIN);
+				
+		digitalWrite(POWER_PIN, LOW);   
+		
+		float to_sleep_us = 1e6/(FS*OVER_SAMPLING) ;
+		delay(1e-3 * to_sleep_us - RISE_TIME_PHOTOTRANSISTOR) ;
 	}
-	// convert to 16bit (because oversampled)
-	int fac = 2 ^ 6;
 	
-	int out =  fac * accum / OVER_SAMPLING;
-	Serial.print(out);
-	Serial.println();
+	
+	
+	
+	Serial.println(accum);
 	
 }

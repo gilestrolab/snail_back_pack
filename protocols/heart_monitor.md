@@ -2,7 +2,7 @@ Snail heart rate monitor
 ========================
 
 This protocol describes how to build an inexpensive and lightweight monitor of snail hear rate.
-The principle is to send light from one side of the shell with red LED light, and reccord the "shaddow" of the heart using a phototransistor, from the other side.
+The principle is to send light from one side of the shell with red LED light, and reccord the "shadow" of the heart using a phototransistor, from the other side.
 The monitor is very small and can be fixed onto the shell of the animal.
 
 

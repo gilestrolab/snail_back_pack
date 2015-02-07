@@ -198,20 +198,26 @@ Importantly, `python2`, not `python3`.
 
 1. Install `python2` on your machine
 2. Install dependency packages using. You can use `pip`, the python package manager for that:
+
     ```
     pip install numpy pyserial
     ```
+    
 3. Install `pygame` ([http://pygame.org/download.shtml])
 4. Download the `python` code (see 'Code Download' section above)
 5. Open a terminal and run the `python` code. For instance:
+
     ```
     python serial_monitor.py --port /dev/ttyACM0
     ```
+    
     Note that you may need chose a specify a different serial port `--port /MY/PORT/IS/HERE` according to your machine and operating system.
     In addition, other options can be displayed by:
+    
     ```
     python serial_monitor.py --help
      ```
+     
     For instance, `--out /WHERE/TO/SAVE/THE/data.txt` can be useful.
 
 

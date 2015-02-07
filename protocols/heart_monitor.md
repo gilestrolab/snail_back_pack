@@ -229,7 +229,7 @@ If you are interested in understanding or adapting this python script, exhaustiv
 Example of Result
 ---------------------------- 
 
-This is an example of about one minute of data sampled at 10Hz:
+This is an example of approximately one minute of real data, sampled at 10Hz:
 ![one minute of data](./img/one_min_data.png)
 
 The corresponding power spectrum indicate a main frequency around 0.75Hz which is 45 beats per minute:

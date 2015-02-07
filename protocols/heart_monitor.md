@@ -26,10 +26,11 @@ Technique used
 
 Materials
 --------------------
+
 * Arduino Uno
 * Computer
 * Low voltage (3V) bright red LED. Ideally, a small surface mounted one with a flat lense and a wide (>100°) angle.
-* Phototransistor that matches the wavelenght of the above LED.
+* Phototransistor (PT) that matches the wavelenght of the above LED.
 * 68Ω resistor
 * 100kΩ resistor
 * Two rows strait PCB header
@@ -40,12 +41,28 @@ Materials
 * Blu tack
 * A large snail (An adult *Helix aspersa* should be perfect)
 
-*The commercial references to the products I have been using can be found [here](./rs_numbers.md)*
+@edbaker -> you will probably want to change the links to your cloned/reorganised version here
+
+*The commercial references to the products I have been using can be found at (https://github.com/gilestrolab/snail_back_pack/blob/master/protocols/rs_numbers.md)*
+
+Code Download
+-------------------------------
+
+@edbaker same here
+* Arduino code ([https://github.com/gilestrolab/snail_back_pack/blob/master/arduino_prototypes/sparse_phototransistor/sparse_phototransistor.ino])
+* Python code ([https://github.com/gilestrolab/snail_back_pack/blob/master/scripts/serial_monitor.py])
+
+Supporting Materials
+-----------------------
+
+* Video of the protocol ([http://dx.doi.org/10.6084/m9.figshare.1294198])
 
 
 Theory
 -------------------
-The heart of snails...
+TODO 
+About the heart of snails...
+The fact that it can be recorded through ECG (refs?)
 
 We are going to power the LED with 5v, so we need to add a 68Ω resistor (or 22Ω for a 3V board).
 Simultaneously, we will record how much current leaks from the phototransistor, which is function of light intensity.
@@ -71,6 +88,7 @@ View from the bottom, the final product could look like this:
 And from the top:
 ![Saddle, top view](./img/fig2.jpg)
 
+In both figures, '`AN`' is for the analogue pin.
 General instruction
 -----------------------
  
@@ -121,31 +139,51 @@ C ---   --- F
 5. Solder the leg of the resistor connected to the phototransistor on A **and D**.
 6. Solder the second wire of the phototransistor on E.
 
-Fitting the circuit on the snail
---------------------------------------------------
-This is probably the hardest part of the process.
-An 5min online video demonstrates this part of the protocol step by step.
-
-<iframe src="http://wl.figshare.com/articles/1294198/embed?show_title=1" width="568" height="502" frameborder="0"></iframe>
-
-
-
 Lead
 --------------------------------------------------
 
 1. Strip the tips of three long (>30cm) flexible and thin  wires.
-2. Cut three columns of the PCB socket
+2. Cut three columns of the PCB socket.
 3. Solder each wire to a different pin of the PCB header.
-4. Plug the PCB socket on the pins D,E,F of the PCB header
+4. Plug the PCB socket on the pins D,E,F of the PCB header.
 5. Unsure you can tell which wire is for ground (pin D), and + (F).
+
+
 
 Arduino
 -------------------
 
-1. Plug the + wire on digital pin 13.
+1. Plug the + wire on digital pin 13 — or 5v if you want constant light (see 'Fitting the Circuit' section below).
 2. Plug the ground wire on ground.
 3. Plug the middle wire on analogue in 1.
-4. Upload the code for this project to the Arduino
-5. The LED light should start blinking quickly
+4. Upload the code for this project to the Arduino.
+5. The LED light should start blinking quickly.
+
+
+
+
+Fitting the Circuit
+--------------------------------------------------
+This is probably the hardest part of the process.
+For this reason, a 4min online video demonstrates this part of the protocol step by step (see 'Supporting Material' section above).
+
+The main steps are:
+
+1. Protect the animal by putting tissue paper on the opening of the shell.
+2. Plug the Arduino to the USB port of your computer.
+3. Run the `python` program (see 'Code Download' section above). A window should appear and plot the signal in real time (see section '???' below).
+4. Plug the circuit on. *Use the 5v pin* instead of the digital pin as it will allow you to see the heart beat much better.
+5. At this stage, you should be able to test the circuit by moving objects between PT and LED, and observe variation in the data displayed by the `python` program. 
+4. Move the LED on the shell until you see the beating heart.
+5. Use blu tac to maintain the circuit on the shell and assess the quality of the signal displayed on your screen.
+6. When the signal is satisfying (sharp oscillations of large amplitude), glue PT and LED to the shell.
+7. Unplug the circuit, interrupt the `python` program, and wait for the glue to dry.
+8. Plug the circuit. This time, **use the analogue pin** as opposed to the 5v.
+9. Run the `python` program. In addition to simply disply heart rate, the data can be saved to a text file using the `--out` option  (see section '???' below).  
+
+**Important Notes:**
+
+* Use as little glue as possible and avoid touching the foot of the animal with any glue. If you have concerns about toxicity, you may consider alternatives such as dental cement. 
+* In the video, the PT is close to the heart whilst the LED is on the opposite side. However, the invert setting also works, and may give more reliable result for long term monitoring. 
 
 

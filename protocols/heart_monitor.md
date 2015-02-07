@@ -29,33 +29,33 @@ Materials
 
 * Arduino Uno
 * Computer
-* Low voltage (3V) bright red LED. Ideally, a small surface mounted one with a flat lense and a wide (>100°) angle.
+* Low voltage (3V) bright red LED. Ideally, a small surface mounted one with a flat lens and a wide (>100°) angle.
 * Phototransistor (PT) that matches the wavelenght of the above LED.
 * 68Ω resistor
 * 100kΩ resistor
-* Two rows strait PCB header
+* Two rows straight PCB header
 * One row PCB socket
-* Thin wire
+* Some thin wire
 * Large garden snail
 * Superglue
 * Blu tack
 * A large snail (An adult *Helix aspersa* should be perfect)
 
-@edbaker -> you will probably want to change the links to your cloned/reorganised version here
+@edwbaker -> you will probably want to change the links to your cloned/reorganised version here
 
 *The commercial references to the products I have been using can be found at (https://github.com/gilestrolab/snail_back_pack/blob/master/protocols/rs_numbers.md)*
 
 Code Download
 -------------------------------
 
-@edbaker same here
-* Arduino code ([https://github.com/gilestrolab/snail_back_pack/blob/master/arduino_prototypes/sparse_phototransistor/sparse_phototransistor.ino])
-* Python code ([https://github.com/gilestrolab/snail_back_pack/blob/master/scripts/serial_monitor.py])
+@edwbaker same here
+* Arduino code (https://github.com/gilestrolab/snail_back_pack/blob/master/arduino_prototypes/sparse_phototransistor/sparse_phototransistor.ino)
+* Python code (https://github.com/gilestrolab/snail_back_pack/blob/master/scripts/serial_monitor.py)
 
 Supporting Materials
 -----------------------
 
-* Video of the protocol ([http://dx.doi.org/10.6084/m9.figshare.1294198])
+* Video of the protocol (http://dx.doi.org/10.6084/m9.figshare.1294198)
 
 
 Theory
@@ -75,7 +75,7 @@ The circuit in itself is really simple:
 ![circuit schematic](./img/circuit.png)
 
 Note that the **digital pin 13 is used instead of the 5v pin**. 
-This way, we can turn the circuit on and off from the arduino.
+This way, we can turn the circuit on and off from the Arduino.
 
 
 Putting it together
@@ -89,6 +89,8 @@ And from the top:
 ![Saddle, top view](./img/fig2.jpg)
 
 In both figures, '`AN`' is for the analogue pin.
+
+
 General instruction
 -----------------------
  
@@ -224,8 +226,14 @@ Importantly, `python2`, not `python3`.
 If you are interested in understanding or adapting this python script, exhaustive explanation are provided, as comments. within the source code. 
 
 
- 
+Example of Result
+---------------------------- 
 
+This is an example of about one minute of data sampled at 10Hz:
+![one minute of data](./img/one_min_data.png)
+
+The corresponding power spectrum indicate a main frequency around 0.75Hz which is 45 beats per minute:
+![power spectrum](./img/power_spectrum.png)
 
 
 

@@ -126,11 +126,11 @@ Fitting the circuit on the snail
 This is probably the hardest part of the process.
 An 5min online video demonstrates this part of the protocol step by step.
 
-<d1>
+<dl>
 
 <iframe src="http://wl.figshare.com/articles/1294198/embed?show_title=1" width="568" height="502" frameborder="0"></iframe>
 
-</d1>
+</dl>
 
 
 

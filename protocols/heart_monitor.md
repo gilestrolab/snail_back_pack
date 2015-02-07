@@ -55,7 +55,7 @@ Theory
 -------------------
 
 We are going to power the LED with 5v, so we need to add a 68kohm resistor (or 22ohm for a 3V board).
-We are going to record how much the phototransistor lets current go though, which is function of light intensity.
+Simultaneously, we will record how much currents leaks from the phototransistor, which is function of light intensity.
 To do this, we can wire one side to the power. On the other side, in parallel, the analog input and, through a 100k resistor, the ground.
 
 
@@ -66,8 +66,13 @@ The circuit in itself is really simple:
 
 Putting it together
 ----------------------
-The goal is to build a sort of saddle that can be glued on the shell:
+The goal is to build a sort of saddle that can be glued on the shell, and plugged to a wire for recording purposes.
+View from the bottom, your final product could look like this:
 
+![Saddle, bottom view](./img/fig1.jpg)
+
+And from the top:
+![Saddle, top view](./img/fig2.jpg)
 
 General instruction, We will use the legs of the resistors, and some wire, as a squeleton for our device, so do not cut them until the end.
 Use "crocodile hands" in order to hols small components whilst soldering.

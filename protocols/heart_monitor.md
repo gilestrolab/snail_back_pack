@@ -29,34 +29,27 @@ Materials
 * Arduino Uno
 * Computer
 * Low voltage (3V) bright red LED. Ideally, a small surface mounted one with a flat lense and a wide (>100°) angle.
-* Phototransistor that matches  the wavelenght of the above LED.
-* 68ohm resistor
-* 100kohm resistor
+* Phototransistor that matches the wavelenght of the above LED.
+* 68Ω resistor
+* 100kΩ resistor
 * Two rows strait PCB header
 * One row PCB socket
 * Thin wire
 * Large garden snail
 * Superglue
 * Blu tack
+* A large snail (An adult *Helix aspersa* should be perfect)
 
-/*
-* A bright red LED (http://my.rs-online.com/web/p/visible-leds/8106850/)
-* A phototransistor (http://uk.rs-online.com/web/p/phototransistors/6548873/)
-* 68ohm resistor (or a 22ohm one for a 3V circuit)
-* A 100kohm resistor
-* PCB header (http://uk.rs-online.com/web/p/pcb-headers/6813026/)
-* PCB Socket (http://uk.rs-online.com/web/p/pcb-sockets/6813048/)
-* Some thin wire, solder, and a soldering iron.
-*/
-
+*The commercial references to the products I have been using can be found [here](./rs_numbers.md)*
 
 
 Theory
 -------------------
+The heart of snails...
 
-We are going to power the LED with 5v, so we need to add a 68kohm resistor (or 22ohm for a 3V board).
-Simultaneously, we will record how much currents leaks from the phototransistor, which is function of light intensity.
-To do this, we can wire one side to the power. On the other side, in parallel, the analog input and, through a 100k resistor, the ground.
+We are going to power the LED with 5v, so we need to add a 68Ω resistor (or 22Ω for a 3V board).
+Simultaneously, we will record how much current leaks from the phototransistor, which is function of light intensity.
+To do this, we can wire one side to the power. On the other side, in parallel, the analog input and, through a 100kΩ resistor, the ground.
 
 
 The circuit
@@ -64,24 +57,35 @@ The circuit
 The circuit in itself is really simple:
 ![circuit schematic](./img/circuit.png)
 
+Note that the **digital pin 13 is used instead of the 5v pin**. 
+This way, we can turn the circuit on and off from the arduino.
+
+
 Putting it together
 ----------------------
-The goal is to build a sort of saddle that can be glued on the shell, and plugged to a wire for recording purposes.
-View from the bottom, your final product could look like this:
+The end goal is to build a sort of saddle that can be glued onto the shell, and then plugged to a wire for recording purposes.
+View from the bottom, the final product could look like this:
 
 ![Saddle, bottom view](./img/fig1.jpg)
 
 And from the top:
 ![Saddle, top view](./img/fig2.jpg)
 
-General instruction, We will use the legs of the resistors, and some wire, as a squeleton for our device, so do not cut them until the end.
-Use "crocodile hands" in order to hols small components whilst soldering.
+General instruction
+-----------------------
+ 
+We will use the leads of the resistors, and some wire, as a skeleton for our device.
+Therefore, we will wait until the end to cut them.
+Soldering the LED and the phototransistor can reveal challenging as both parts are very small.
+So, it is recommended to hold them firmly, for instance, using "helping hands".
+It is easy to forget that the **LED and PT should both face downward** as the light will be transmitted through the shell. 
+
 
 The LED
 --------------
 
-1. Before starting, ensure you can tell cathode and anode of the LED apart. Most surface mounted LEDs will have an indication such as a small chip on the + side.
-2. Solder directly one leg of the 68ohm resistor to the anode of the LED.
+1. Before starting, ensure you can tell cathode and anode of the LED apart. Most surface mounted LEDs will have an indication such as a small chip on the `+` side.
+2. Solder directly one leg of the 68Ω resistor to the anode of the LED.
 3. Cut a short wire (1cm), strip and twist its tip.
 4. Solder one extremity of the wire to the cathode.
 
@@ -117,6 +121,14 @@ C ---   --- F
 5. Solder the leg of the resistor connected to the phototransistor on A **and D**.
 6. Solder the second wire of the phototransistor on E.
 
+Fitting the circuit on the snail
+--------------------------------------------------
+This is probably the hardest part of the process.
+An 5min online video demonstrates this part of the protocol step by step.
+
+<iframe src="http://wl.figshare.com/articles/1294198/embed?show_title=1" width="568" height="502" frameborder="0"></iframe>
+
+
 
 Lead
 --------------------------------------------------
@@ -125,7 +137,7 @@ Lead
 2. Cut three columns of the PCB socket
 3. Solder each wire to a different pin of the PCB header.
 4. Plug the PCB socket on the pins D,E,F of the PCB header
-5. Unsure you can tell wich wire is for ground (pin D), and + (F).
+5. Unsure you can tell which wire is for ground (pin D), and + (F).
 
 Arduino
 -------------------

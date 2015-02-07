@@ -17,8 +17,7 @@ def plot(screen, time_queue, value_queue, scale=True):
     t = np.array(list(time_queue))
     values = np.array(list(value_queue), dtype=np.float32)
     
-    
-    # we scale the signal so that all vallue lie between 0 and 1 
+    # we scale the signal so that all vallue lie between 0 and 1
     new_y =  values - np.min(values,0)
     
     mmax = np.max(new_y,0)
@@ -74,10 +73,12 @@ if __name__ == "__main__":
     
     display = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
     
-    # The `with statement` will ensure the file is closed if an exception happens
-    
+    # The `with statement` will ensure the file is closed properly, should any exception happen
     with open(out_file, "w") as f:
-        # infinite loop
+        #header of a csv like file
+        f.write("t, y\n")
+
+        # Infinite loop
         while True:
             # we read a line from serial port and remove any `\r` and `\n` character
             line = serial_port.readline().rstrip()
@@ -93,8 +94,11 @@ if __name__ == "__main__":
             
             # the relative time from the start of the program is `dt`
             dt =  now - start
-            
-            # We append relative  time and value to their respective queues
+
+            # We write a formated line to the end of the result file
+            f.write("%f, %f\n" % (dt, value))
+
+            # We append relative time and value to their respective queues
             time_queue.append(dt)
             value_queue.append(value)
             

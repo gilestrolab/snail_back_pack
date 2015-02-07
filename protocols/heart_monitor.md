@@ -183,7 +183,44 @@ The main steps are:
 
 **Important Notes:**
 
-* Use as little glue as possible and avoid touching the foot of the animal with any glue. If you have concerns about toxicity, you may consider alternatives such as dental cement. 
-* In the video, the PT is close to the heart whilst the LED is on the opposite side. However, the invert setting also works, and may give more reliable result for long term monitoring. 
+* Use as little glue as possible and avoid touching the foot of the animal with any glue. If you are concerns about toxicity, you may consider alternatives such as dental cement.
+* In the video, the PT is close to the heart whilst the LED is on the opposite side. However, the invert setting also works, and may give more reliable result for long term monitoring.
+ 
+Arduino Code Complementary 
+----------------------------
+
+TODO
+
+Python Code Complementary 
+----------------------------
+This project uses `python` programing language for  real time visualisation on a computer screen.
+Importantly, `python2`, not `python3`.
+
+1. Install `python2` on your machine
+2. Install dependency packages using. You can use `pip`, the python package manager for that:
+```
+pip install numpy pyserial
+```
+3. Install `pygame` ([http://pygame.org/download.shtml])
+4. Download the `python` code (see 'Code Download' section above)
+5. Open a terminal and run the `python` code. For instance:
+```
+python serial_monitor.py --port /dev/ttyACM0
+```
+Note that you may need chose a specify a different serial port `--port /MY/PORT/IS/HERE` according to your machine and operating system.
+In addition, other options can be displayed by:
+```
+python serial_monitor.py --help
+ ```
+For instance, `--out /WHERE/TO/SAVE/THE/data.txt` can be useful.
+
+If you are interested in understanding or adapting this python script, exhaustive explanation are provided, as comments. within the source code. 
+
+
+ 
+
+
+
+
 
 

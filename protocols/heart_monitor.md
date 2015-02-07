@@ -1,5 +1,5 @@
 Optical snail heart rate monitor
-========================
+==================================
 
 Monitoring physiological variables is...
 This project describes an inexpensive and non-invasive device to monitor hear rate of snails.
@@ -51,9 +51,8 @@ Materials
 
 
 
-theory
+Theory
 -------------------
-
 
 We are going to power the LED with 5v, so we need to add a 68kohm resistor (or 22ohm for a 3V board).
 We are going to record how much the phototransistor lets current go though, which is function of light intensity.
@@ -63,9 +62,7 @@ To do this, we can wire one side to the power. On the other side, in parallel, t
 The circuit
 ----------------------
 The circuit in itself is really simple:
-
-
-
+![circuit schematic](./img/circuit.png)
 
 Putting it together
 ----------------------

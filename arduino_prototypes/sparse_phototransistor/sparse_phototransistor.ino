@@ -7,10 +7,10 @@
    rate by simply changing the argument of the
    delay() statement. */
  
-#define N_ANALOG_INPUT_PINS 5
+#define N_ANALOG_INPUT_PINS 4
 #define OVER_SAMPLING 3.
 #define FS 5.
-#define POWER_PIN 13
+#define POWER_PIN 53
 #define RISE_TIME_PHOTOTRANSISTOR 1// ms
 
 int accum_ar[N_ANALOG_INPUT_PINS];

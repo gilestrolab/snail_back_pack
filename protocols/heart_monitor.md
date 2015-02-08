@@ -1,8 +1,30 @@
-Optical snail heart rate monitor
+Optical Snail Heart Rate Monitor
 ==================================
 
-Monitoring physiological variables is...
-This project describes an inexpensive and non-invasive device to monitor hear rate of snails.
+Monitoring physiological variables is crucial in many areas of biology.
+It is particularily challenging to monitor physiology of small 
+animals whilst minimising interferance, or ideally, in the wild.
+
+Land snails are remarkable animals for their ability to 
+enter in dormancy states when the weather becomes too cold (hibernation) or too dry (estivation). 
+They can remain several months in these respective states as there 
+metabolism dramatically slows down, which reduces their need for food and water.
+
+Recording heart rate of snails could reveal a valuable tool to shed light on the mechanisms 
+underlying these exceptional phenomena. In addition, it could help understaning temporal patterns 
+of activity and, for instance, foraging and mating strategies.
+
+Garden snails (*Helix aspersa*) are fairly large terrestrial invertebrates (more than 10g for adult)
+capable of pulling their own weight several times.
+In addition, their shell is stable mineral support where small circuit can simply be glued with, 
+presumably, little inconveinience for the snail.
+It is possible to observe the heart of young snails, through their thin shell, by eye.
+In adult snails, the same observation can be accheived by sending light through the shell.
+It should therefore be possible to mesure light attenuation over time in order to infer heart rate.     
+
+For these reasons, land snails seem particularily suited to carrying small
+electronic equipment in order to record an important physiological variable.
+This project describes an inexpensive and non-invasive device to monitor heart rate of snails.
 
 
 Project aim

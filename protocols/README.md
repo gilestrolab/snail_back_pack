@@ -1,1 +1,1 @@
-[Detailed protocol](./hear_monitor.md)
+[Detailed protocol](./heart_monitor.md)

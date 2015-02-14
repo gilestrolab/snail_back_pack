@@ -1,9 +1,23 @@
-import serial
+"""
+This a small python program to collect, save and visualise data from the serial port in real time.
+Each data point is a scalar number.
+Consecutive data points result in a time series that is assumed to be irregular (i.e. heterogeneous).
+"""
+
+__author__ = "Quentin Geissmann"
+
+
 import os
 import time
+# In order to read from serial port
+import serial
+# Command line argument parsing
 import argparse
+# For basic linear algebra
 import numpy as np
+# To have a queue (FIFO) of values
 from collections import deque
+# Plotting the data
 import pygame
 
 
@@ -12,33 +26,50 @@ _N_POINTS = 200
 DISPLAY_WIDTH, DISPLAY_HEIGHT = 1200, 520
 
 
-def plot(screen, time_queue, value_queue, scale=True):
-    
+def plot(screen, time_queue, value_queue, window_size):
+    """
+    The function to draw new data on a window.
+    Calling repetitively this function, with new data, will display a dynamic "scrolling" plot.
+    The y axis if for the values (value_queue) and the x axis is for time.
+    The most recent values are plotted on the right most part of the window, whilst the
+    oldest ones are on the left (until they eventually "leave" the screen)
+
+    :param screen: The display window to draw on
+    :param time_queue: A collection of time stamps
+    :param value_queue:  A collection of y values matching time stamps.
+    :param window_size:  The duration (in seconds) corresponding to the width of the window.
+
+    """
+    # time
     t = np.array(list(time_queue))
+    # y values
     values = np.array(list(value_queue), dtype=np.float32)
     
-    # we scale the signal so that all vallue lie between 0 and 1
+    # We scale the signal so that all values lie between 0 and 1
+
     new_y =  values - np.min(values,0)
-    
+    # the maximal value in y
     mmax = np.max(new_y,0)
-    
     # we ensure no division by 0 can happen
     if mmax == 0:
         return
-        
+    # after that new_y is between 0 and 1
     new_y /= np.max(new_y,0)
     
-    
+    # Now, we scale new_y to the fit int the plotting window
     new_y *= DISPLAY_HEIGHT
     new_y = DISPLAY_HEIGHT - new_y
     
     #we express time as a proportion of the window size
-    
     new_t = t - t[0]
     new_t *= (DISPLAY_WIDTH/float(window_size))
 
+    # Clear the window (filling with black)
     screen.fill((0,0,0))
+
+    # Creating points (i.e. `x,y` tuples of int values)
     pts = [(int(x),int(y)) for x,y in zip(new_t, new_y )]
+    # Then drawing in yellow
     pygame.draw.lines(screen, (255, 255, 0),False, pts, 3)
     pygame.display.flip()
     
@@ -48,7 +79,6 @@ if __name__ == "__main__":
     
     # parsing command line arguments
     parser = argparse.ArgumentParser()
-    # TODO windows compat default port !
     parser.add_argument('--port', help='port', type=str, default="/dev/ttyACM0")
     parser.add_argument('--vws', help='The duration of the viewing window (s)', type=int, default=20)
     parser.add_argument('--out', help='An optional output file', type=str, default=os.devnull)
@@ -64,60 +94,67 @@ if __name__ == "__main__":
     # We start a timer using the real time from the operating system
     start = time.time()
     
-    # Then we make two queues (FIFO containers); one for the values and one for the time stamps.
+    # Then we make two queues (FIFO containers); one for the values and one for the time stamps
     time_queue, value_queue = deque(), deque()
 
     # We need to initialise pygame
     pygame.init()
-    # We build the pygame window before we can start painting inside 
-    
+
+    # We build the pygame window before we can start painting inside
     display = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
+    # Let us set the window name as well
+    pygame.display.set_caption('Snail Heart Rate Monitor')
     
     # The `with statement` will ensure the file is closed properly, should any exception happen
     with open(out_file, "w") as f:
-        #header of a csv like file
+        # Header of a csv like file
         f.write("t, y\n")
 
-        # Infinite loop
-        while True:
-            # we read a line from serial port and remove any `\r` and `\n` character
-            line = serial_port.readline().rstrip()
-            # just after, we get a time stamp
-            now = time.time()
-            # we try to convert the line to an integer value
-            try:
-                value =  int(line)
-            # if something goes wrong, we do not stop, but we print the error message
-            except ValueError as e:
-                print e
-                continue
-            
-            # the relative time from the start of the program is `dt`
-            dt =  now - start
 
-            # We write a formated line to the end of the result file
-            f.write("%f, %f\n" % (dt, value))
+        try:
+            # Infinite loop
+            while True:
+                # we read a line from serial port and remove any `\r` and `\n` character
+                line = serial_port.readline().rstrip()
+                # Just after, we get a time stamp
+                now = time.time()
+                # we try to convert the line to an integer value
+                try:
+                    value =  int(line)
 
-            # We append relative time and value to their respective queues
-            time_queue.append(dt)
-            value_queue.append(value)
-            
-            # we wait to have at least five points AND three seconds of data
-            if time_queue[-1] < 3 or len(time_queue) < 5:
-                continue
+                # If something goes wrong, we do not stop, but we print the error message
+                except ValueError as e:
+                    print e
+                    continue
 
-            # Now, we remove/forget from the queues any value older than the window size
-            # this way we will only plot the last n (default 20) seconds of data
-            while time_queue[-1] - time_queue[0] > window_size:
-                time_queue.popleft()
-                value_queue.popleft()
-                
-            # Now we plot the values
-            plot(display, time_queue, value_queue)
-            
-            # So that the program stops if we close the window
-            for et in pygame.event.get():
-                if et.type == pygame.QUIT:
-                    raise KeyboardInterrupt
-            
+                # The relative time from the start of the program is `dt`
+                dt =  now - start
 
+                # We write a formatted line to the end of the result file
+                f.write("%f, %f\n" % (dt, value))
+
+                # We append relative time and value to their respective queues
+                time_queue.append(dt)
+                value_queue.append(value)
+
+                # We wait to have at least five points AND three seconds of data
+                if time_queue[-1] < 3 or len(time_queue) < 5:
+                    continue
+
+                # Now, we remove/forget from the queues any value older than the window size
+                # This way. we will only plot the last n (default 20) seconds of data
+                while time_queue[-1] - time_queue[0] > window_size:
+                    time_queue.popleft()
+                    value_queue.popleft()
+
+                # Now we plot the values
+                plot(display, time_queue, value_queue, window_size)
+
+                # So that the program stops if we close the window
+                for et in pygame.event.get():
+                    if et.type == pygame.QUIT:
+                        raise KeyboardInterrupt
+
+
+        except KeyboardInterrupt:
+            print "Interrupting program..."

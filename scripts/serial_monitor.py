@@ -4,7 +4,7 @@ Each data point is a scalar number.
 Consecutive data points result in a time series that is assumed to be irregular (i.e. heterogeneous).
 """
 
-__author__ = "Quentin Geissmann"
+__author__ = "Quentin Geissmann, [http://github.com/qgeissmann]"
 
 
 import os

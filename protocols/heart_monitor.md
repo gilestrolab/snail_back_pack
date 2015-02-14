@@ -1,13 +1,15 @@
 Optical Snail Heart Rate Monitor
 ==================================
 
+**Quentin Geissmann**
+
 Monitoring physiological variables is crucial in many areas of biology.
-It is particularly challenging to monitor physiology of small
+It is particularly challenging to study the physiology of small
 animals whilst minimising experimental interference or under natural conditions.
 
 Land snails are remarkable for their ability to
 enter in dormancy states when the weather becomes too cold (hibernation) or too dry (estivation).
-They can remain several months in these respective states as there
+They can remain several months in these respective states as their
 metabolism dramatically slows down, which reduces their need for food and water.
 
 Recording heart rate of snails could reveal a valuable tool to shed light on the mechanisms
@@ -96,7 +98,7 @@ In human, pulse-oximetry can be used to reliably and non-invasively infer heart 
 In snail, since a difference in light absorbance is visible during heart beats, it should be possible to record these variations using simple electronics.
 
 Light-Emitting Diodes (LEDs) are used in a wide range of applications.
-They feature low power consumptions and some of them are capable of generating a relatively narrow emission spectrum (e.g. 95% of the emission within a 100nm band).
+They feature low power consumptions and some of them are capable of generating a relatively narrow emission spectrum (e.g. 95% of the emission within a 100 nm band).
 In this project, we will power an LED with a forward current `I_F = 40 mA`) and a forward voltage `V_F = 2.6 V` from a `V_B = 5 V` board.
 Therefore, we need to drop `V_R = V_B - V_F = 2.4 V` with a resistor (in series with the LED).
 
@@ -352,6 +354,9 @@ The corresponding power spectrum indicates a fundamental frequency around 0.75 H
 
 Next steps
 ------------------------------
+Improvements to this method are currently under investigation and include:
 
-* Use infrared instead of red light in order to reduce environmental noise
-* Compute heart rate directly on the Arduino board
+* Using infrared instead of red light in order to reduce environmental noise.
+* Computing heart rate directly on the Arduino board.
+* Developing a wireless version.
+* Using several PTs to increase accuracy and robustness.

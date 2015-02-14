@@ -4,7 +4,7 @@ Optical Snail Heart Rate Monitor
 **Quentin Geissmann**
 
 Monitoring physiological variables is crucial in many areas of biology.
-It is particularly challenging to study the physiology of small
+It is particularly difficult to study the physiology of small
 animals whilst minimising experimental interference or under natural conditions.
 
 Land snails are remarkable for their ability to
@@ -13,7 +13,7 @@ They can remain several months in these respective states as their
 metabolism dramatically slows down, which reduces their need for food and water.
 
 Recording heart rate of snails could reveal a valuable tool to shed light on the mechanisms
-underlying these exceptional phenomena. In addition, it could help understanding temporal patterns
+underlying these exceptional phenomena. In addition, it could help to understand temporal patterns
 of activity and, for instance, foraging and mating strategies.
 
 Garden snails (*Helix aspersa*) are fairly large terrestrial invertebrates (more than 10 g for adults)
@@ -99,7 +99,7 @@ In snail, since a difference in light absorbance is visible during heart beats, 
 
 Light-Emitting Diodes (LEDs) are used in a wide range of applications.
 They feature low power consumptions and some of them are capable of generating a relatively narrow emission spectrum (e.g. 95% of the emission within a 100 nm band).
-In this project, we will power an LED with a forward current `I_F = 40 mA`) and a forward voltage `V_F = 2.6 V` from a `V_B = 5 V` board.
+In this project, we will power an LED with a forward current `I_F = 40 mA`, and a forward voltage `V_F = 2.6 V` from a `V_B = 5 V` board.
 Therefore, we need to drop `V_R = V_B - V_F = 2.4 V` with a resistor (in series with the LED).
 
 **@edwbaker => maths formatting around here?**
@@ -187,7 +187,7 @@ Lead
 2. Cut three columns of the PCB socket.
 3. Solder each wire to a different pin of the PCB header.
 4. Plug the PCB socket on the pins `D`, `E` and `F` of the PCB header.
-5. Unsure you can tell which wire is for ground (pin `D`) and and which is for `+` (pin `F`).
+5. Unsure you can tell which wire is for ground (pin `D`), and which is for `+` (pin `F`).
 
 Arduino
 -------------------

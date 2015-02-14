@@ -170,7 +170,7 @@ Assembling on the PCB header
 
 1. We cut the PCB headed to leave only three columns (i.e. 6pins). From a bottom-up view, let us label the pins:
 
-!(PCB header map)[./img/header_map.png]
+![PCB header map](./img/header_map.png)
 
 
 2. Solder the wire connected to the LED light on A. That is on the `-` side.

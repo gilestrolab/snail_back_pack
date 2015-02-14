@@ -8,13 +8,13 @@ Quentin Geissmann [http://github.com/qgeissmann]
 #define OVER_SAMPLING 16
 
 // The sampling frequency(in Hz). That is the actual number of point we output every second
-#define FS 10.
+#define FS 5.0
 
 // The digital pin controlling power
 #define POWER_PIN 2
 
 // How long should we leave the circuit turned on  before reading a value
-#define RISE_TIME 5// ms
+#define RISE_TIME 1// ms
 
 // The analogue pin from which phototransistor values are read
 #define PHOTO_TRANSISTOR_PIN 1

@@ -47,7 +47,7 @@ void loop(void) {
 	    // Turn the circuit ON
 		digitalWrite(POWER_PIN, HIGH);
 
-		// We wait for ce circuit to be in a stationary state
+		// We wait for the circuit to be in a stationary state
 		delay(RISE_TIME);
 
 		// We increment the accumulator by the value in the phototransistor pin

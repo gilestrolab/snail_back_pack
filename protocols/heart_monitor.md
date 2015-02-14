@@ -64,13 +64,16 @@ Materials
 * Blu tack
 * A large snail (An adult *Helix aspersa* should be perfect)
 
-@edwbaker -> you will probably want to change the links to your cloned/reorganised version here
-@edwbaker -> Maybe you want this as a foot note, or not at all.
+**@edwbaker -> you will probably want to change the links to your cloned/reorganised version here**
+
+**@edwbaker -> Maybe you want this as a foot note, or not at all.**
+
 *The commercial references to some of the electronic components can be found at (https://github.com/gilestrolab/snail_back_pack/blob/master/protocols/rs_numbers.md)*
 
 Code Download
 -------------------------------
-@edwbaker -> fix links at some point
+**@edwbaker -> fix links at some point**
+
 * Arduino code (https://github.com/gilestrolab/snail_back_pack/blob/master/arduino_prototypes/sparse_phototransistor/sparse_phototransistor.ino)
 * Python code (https://github.com/gilestrolab/snail_back_pack/blob/master/scripts/serial_monitor.py)
 
@@ -82,7 +85,7 @@ Theory
 -------------------
 
 Land snails have a semi-closed circular system where their oxygenated blood (hemolymph) is carried from their lung to the heart
-in a pulmonary vein. Then, the heart, which has two cavities, a an atrium and a ventricle, pumps the blood into the aorte artery.
+in a pulmonary vein. Then, the heart, which has two cavities, a an atrium and a ventricle, pumps the blood into the aorta artery.
 As opposed to a closed circulatory system (e.g. vertebrates), the hemolymph then mixes with the extracellular fluid.
 
 The heart rates of snails is regulated by oxygen demand and can scale from more to 1 beat per second (e.g. when the animal is active and the temperature is high) to as low as one a minute (e.g. during hibernation).
@@ -96,7 +99,9 @@ Light-Emitting Diodes (LEDs) are used in a wide range of applications.
 They feature low power consumptions and some of them are capable of generating a relatively sharp narrow emission spectrum (e.g. 95% of the emission within a 100nm band).
 In this project, we will power an LED wit a forward current (`I_F = 40mA`) with a forward voltage (`V_F = 2.6V`) from a `V_B = 5V` board. 
 Therefore, we need to drop `V_R = V_B - V_F 2.4V` with a resistor (in series with the LED).
-@edwbaker => maths formatting here?
+
+**@edwbaker => maths formatting around here?**
+
 So the resistance `R = V_R/I_V`. So, in our case, `R = 60Ω`, which means we should be able to use a 68Ω resistor.
 
 Phototransistors (PTs) are essentially transistors that allow variable current to pass though according to light intensity.
@@ -187,7 +192,7 @@ Lead
 Arduino
 -------------------
 
-1. Plug the `+` wire on digital pin 13 — or 5v if you want constant light (see 'Fitting the Circuit' section below).
+1. Plug the `+` wire on digital pin 2 — or 5v if you want constant light (see 'Fitting the Circuit' section below).
 2. Plug the ground wire on ground.
 3. Plug the middle wire on analogue in 1.
 4. Compile and upload the code for this project to the Arduino.
@@ -225,7 +230,77 @@ In the end, the fitted device on the animal could look like this:
 Arduino Code Complementary 
 ----------------------------
 
-TODO
+This project only contains a short file.
+We start by defining numerical constants:
+
+* Every data point will be the sum of `OVER_SAMPLING` consecutive reads
+* The sampling frequency `FS` (in Hz). That is the actual number of point we output every second
+* `RISE_TIME` defines how long should we leave the circuit turned on  before reading any value
+* The digital pin controlling power is number 2
+* The analogue pin from which phototransistor values are read is number 1
+
+```C++
+#define OVER_SAMPLING 16
+#define FS 5.0
+#define RISE_TIME 1// ms
+#define POWER_PIN 2
+#define PHOTO_TRANSISTOR_PIN 1
+```
+
+
+// We define the time to sleep between actual reads (i.e. accounting for oversampling)
+// as 1/ (Fse), where Fse is the actual sampling frequency, which is simply (FS x OVER_SAMPLING)
+// Importantly, FS is in Hz(s^-1), whilst `delay()`expect ms, so we multiply the above expression by 1e3 (i.e. 1000)
+// In addition, we already ask the device to sleep (RISE_TIME ms) before reading values, so we subtract this value
+// Finally, since this value is not going to change during execution of the program,
+// we can define it as a constant (const)
+We are performing *oversampling* that is every data point we output is, in fact, the sum of several (exactly 16 in this example) reads.
+Therefore, the actual reading sampling frequency `Fs_a = Fs * a` where `Fs` is the resulting sampling frequency (i.e. 5) and `a`, the resulting sampling frequency (5.0Hz).
+The delay `dt` between two actual reads is simply `1/Fs_a` (in seconds).
+Therefore, we can express the number of miliseconds to sleep as:
+```C++
+const float time_to_sleep_ms = 1e3/(FS*OVER_SAMPLING) - RISE_TIME;
+```
+Note that we also subtract the rise time to be more accurate.
+
+In the setup, we just:
+
+* set the baud rate to 57600 which should be more than enough
+* set the digital pin as an output pin that can take HIGH(5v) or LOW(0v) values
+```C++
+void setup(void) {
+	Serial.begin(57600);
+	pinMode(POWER_PIN, OUTPUT);
+}
+```
+
+Then, in every iteration of the main loop:
+
+* We initialise an accumulator variable to 0.
+* We are going to sample as many time as the value of `OVER_SAMPLING`, so we start a for loop in which we:
+    * Turn the circuit ON
+    * Wait for the circuit to be in a stationary state
+    * read the phototransistor value
+    * We increment the accumulator by the obtain value
+    * We immediately turn the circuit OFF
+    * We sleep for the delay `dt`
+* When the obove loop completes, we can send the value of the accumulator to the serial port in order to use it from a connected computer
+
+```C++
+void loop(void) {
+    unsigned int accum = 0;
+	for(int i =0; i < OVER_SAMPLING; i++){
+		digitalWrite(POWER_PIN, HIGH);
+		delay(RISE_TIME);
+		accum +=  analogRead(PHOTO_TRANSISTOR_PIN);
+		digitalWrite(POWER_PIN, LOW);
+		delay(time_to_sleep_ms) ;
+	}
+	Serial.println(accum);
+}
+```
+
+
 
 Python Code Complementary 
 ----------------------------

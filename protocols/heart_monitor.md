@@ -211,7 +211,11 @@ The main steps are:
 6. When the signal is satisfying (sharp oscillations of large amplitude), glue PT and LED to the shell.
 7. Unplug the circuit, interrupt the `python` program, and wait for the glue to dry.
 8. Plug the circuit. This time, **use the analogue pin** as opposed to the 5v.
-9. Run the `python` program. In addition to simply disply heart rate, the data can be saved to a text file using the `--out` option  (see section 'Python Code Complementary' below).  
+9. Run the `python` program. In addition to simply display heart rate, the data can be saved to a text file using the `--out` option  (see section 'Python Code Complementary' below).  
+
+In the end, the fitted device on the animal could look like this:
+
+![snail with device](./img/snail_with_device.jpg)
 
 **Important Notes:**
 
@@ -263,7 +267,7 @@ Example of Result
 This is an example of approximately one minute of real data, sampled at 10Hz:
 ![one minute of data](./img/one_min_data.png)
 
-The corresponding power spectrum indicate a main frequency around 0.75Hz which is 45 beats per minute:
+The corresponding power spectrum indicate a fundamental frequency around 0.75Hz, which is 45 beats per minute:
 ![power spectrum](./img/power_spectrum.png)
 
 Next steps

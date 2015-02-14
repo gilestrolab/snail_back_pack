@@ -314,8 +314,8 @@ Importantly, `python2` (not `python3`) should be run.
     ```
     pip install numpy pyserial
     ```
-    
-3. Install `pygame` ([http://pygame.org/download.shtml])
+   
+3. Install `pygame` (http://pygame.org/download.shtml). **@edwbaker -> I am not sure how/if you want to display urls inline**
 4. Download the `python` code (see 'Code Download' section above)
 5. Open a terminal and run the `python` code. For instance:
     

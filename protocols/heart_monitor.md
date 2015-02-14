@@ -252,7 +252,8 @@ Importantly, `python2`, not `python3`.
      
     For instance, `--out /WHERE/TO/SAVE/THE/data.txt` can be useful.
 
-
+WHen running the program, a visualisation window should appear:
+![visualisation](./img/python_window.png)
 If you are interested in understanding or adapting this python script, explanations are provided, as comments, within the source code. 
 
 

@@ -234,31 +234,31 @@ We start by defining numerical constants:
 
 
 ```C++
-#define OVER_SAMPLING 16
-#define FS 5.0 // in Hz
-#define RISE_TIME 1 // in ms
+#define OVER_SAMPLING 256
+#define FS 8.0 // in Hz
+#define RISE_TIME 8 // in microseconds
 #define POWER_PIN 2
 #define PHOTO_TRANSISTOR_PIN 1
 ```
 
 * Every data point will be the sum of `OVER_SAMPLING` consecutive reads.
 * The sampling frequency `FS` (in Hz). That is the actual number of point we output every second.
-* `RISE_TIME` defines how long should we leave the circuit turned on  before reading any value.
+* `RISE_TIME` defines how long should we leave the circuit turned on  before reading any value. 
 * The digital pin controlling power is number 2.
 * The analogue pin from which PT values are read is number 1.
 
 
-Then, we compute the time to wait between consecutive reads:
+Then, we compute the time to wait between consecutive reads, in microseconds:
 
 ```C++
-const float time_to_sleep_ms = 1e3/(FS*OVER_SAMPLING) - RISE_TIME;
+const float time_to_sleep_us = 1e6 / (FS * OVER_SAMPLING) - RISE_TIME;
 ```
 
-Since are performing *oversampling* every data point we output is, in fact, the sum of several (in this example, exactly 16) reads.
-Therefore, the actual reading sampling frequency `Fs_a = Fs * s` where `Fs` is the resulting sampling frequency (i.e. 5 Hz) and `s`, the oversampling factor (i.e. 16 times).
+Since are performing *oversampling* every data point we output is, in fact, the sum of several (in this example, exactly 256) reads.
+Therefore, the actual reading sampling frequency `Fs_a = Fs * s` where `Fs` is the resulting sampling frequency (i.e. 8.0 Hz) and `s`, the oversampling factor (i.e. 256 times).
 The delay `dt` between two actual reads is then simply `1/Fs_a` (in seconds).
 
-Note that we also subtract the rise time to be more accurate. Also, we multiply by 1000 since we want milliseconds instead of seconds.
+Note that we also subtract the rise time to be more accurate. Also, we multiply by `1e6` since we want microseconds instead of seconds.
 
 
 In the setup:
@@ -279,14 +279,18 @@ And in the main loop:
 
 ```C++
 void loop(void) {
-    unsigned int accum = 0;
+    float accum = 0;
     for(int i =0; i < OVER_SAMPLING; i++){
         digitalWrite(POWER_PIN, HIGH);
-        delay(RISE_TIME);
+        delayMicroseconds(RISE_TIME);
         accum +=  analogRead(PHOTO_TRANSISTOR_PIN);
         digitalWrite(POWER_PIN, LOW);
-        delay(time_to_sleep_ms) ;
+        if(time_to_sleep_us > 16383)
+            delay(time_to_sleep_us / 1e3);
+        else
+            delayMicroseconds(time_to_sleep_us);
     }
+    accum /= OVER_SAMPLING
     Serial.println(accum);
 }
 ```
@@ -298,11 +302,10 @@ For each iteration:
     1. Turn the circuit ON.
     1. Wait for the circuit to be in a stationary state.
     1. Read the PT value.
-    1. We increment the accumulator by the obtain value.
+    1. We increment the accumulator by the obtained value.
     1. We immediately turn the circuit OFF.
-    1. We sleep for the delay `dt`.
-3. When the above loop completes, we can send the value of the accumulator to the serial port in order to use it from a connected computer.
-
+    1. We sleep for the delay `dt`. We use `delayMilliseconds()` only if number of microseconds is lower than 16383 since higher values are not accurate.
+3. When the above loop completes, we can divide accumulator by the number of samples and send the value to the serial port in order to use it from a connected computer.
 
 
 Python Code Complementary
@@ -359,4 +362,4 @@ Improvements to this method are currently under investigation and include:
 * Using infrared instead of red light in order to reduce environmental noise.
 * Computing heart rate directly on the Arduino board.
 * Developing a wireless version.
-* Using several PTs to increase accuracy and robustness.
+* Using several PTs simultaneously to increase accuracy and robustness.

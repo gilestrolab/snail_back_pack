@@ -20,6 +20,9 @@ from collections import deque
 # Plotting the data
 import pygame
 
+import sys
+import glob
+
 
 _BAUD = 57600
 _N_POINTS = 200
@@ -73,13 +76,47 @@ def plot(screen, time_queue, value_queue, window_size):
     pygame.draw.lines(screen, (255, 255, 0),False, pts, 3)
     pygame.display.flip()
     
-     
+
+
+def serial_ports():
+    """Lists serial ports, from:
+    http://stackoverflow.com/questions/12090503/listing-available-com-ports-with-python
+
+    :raises EnvironmentError:
+        On unsupported or unknown platforms
+    :returns:
+        A list of available serial ports
+    """
+    if sys.platform.startswith('win'):
+        ports = ['COM' + str(i + 1) for i in range(256)]
+
+    elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+        # this is to exclude your current terminal "/dev/tty"
+        ports = glob.glob('/dev/tty[A-Za-z]*')
+
+    elif sys.platform.startswith('darwin'):
+        ports = glob.glob('/dev/tty.*')
+
+    else:
+        raise EnvironmentError('Unsupported platform')
+
+    result = []
+    for port in ports:
+        try:
+            s = serial.Serial(port)
+            s.close()
+            result.append(port)
+        except (OSError, serial.SerialException):
+            pass
+    return result
+
+
 if __name__ == "__main__":
     
     
     # parsing command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument('--port', help='port', type=str, default="/dev/ttyACM0")
+    parser.add_argument('--port', help='port', type=str, default=None)
     parser.add_argument('--vws', help='The duration of the viewing window (s)', type=int, default=20)
     parser.add_argument('--out', help='An optional output file', type=str, default=os.devnull)
 
@@ -89,7 +126,19 @@ if __name__ == "__main__":
     out_file = arg_dict["out"]
     
     # Here we open the serial port
-    serial_port = serial.Serial(arg_dict["port"], _BAUD, timeout=2)
+    port = arg_dict["port"]
+    if port is None:
+        print "Scanning serial ports..."
+        ports = serial_ports()
+        if len(ports) == 0:
+            raise Exception("No serial port found. Ensure your device is plugged. You ab also explicitly use the option `--port`")
+        elif len(ports) > 2:
+            print "%i serial ports found:\n %s" % (len(ports), "\n\t".join(ports))
+        port = ports[0]
+        print "Using %s " % port
+
+
+    serial_port = serial.Serial(port, _BAUD, timeout=2)
     
     # We start a timer using the real time from the operating system
     start = time.time()
@@ -107,11 +156,10 @@ if __name__ == "__main__":
     
     # The `with statement` will ensure the file is closed properly, should any exception happen
     with open(out_file, "w") as f:
-        # Header of a csv like file
-        f.write("t, y\n")
-
-
         try:
+            # Header of a csv like file
+            f.write("t, y\n")
+
             # Infinite loop
             while True:
                 # we read a line from serial port and remove any `\r` and `\n` character
@@ -120,7 +168,7 @@ if __name__ == "__main__":
                 now = time.time()
                 # we try to convert the line to an integer value
                 try:
-                    value =  int(line)
+                    value =  float(line)
 
                 # If something goes wrong, we do not stop, but we print the error message
                 except ValueError as e:

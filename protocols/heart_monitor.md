@@ -76,7 +76,7 @@ Code Download
 -------------------------------
 **@edwbaker -> fix links at some point**
 
-* Arduino code (https://github.com/gilestrolab/snail_back_pack/blob/master/arduino_prototypes/sparse_phototransistor/sparse_phototransistor.ino)
+* Arduino code (http://tinyurl.com/p4h5qub)
 * Python code (https://github.com/gilestrolab/snail_back_pack/blob/master/scripts/serial_monitor.py)
 
 Supporting Materials

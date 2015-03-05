@@ -16,11 +16,18 @@ Housing
 
 Food
 -----
-
+*flour mix
 
 
 Other instruments
 -------------------
 * brush/toothbrush to clean the shells for device adhesion
 * water sprayer
+* 
+
+
+
+Device optimisation
+---------------------
+* use light diffraction to expand irradiated area
 * 

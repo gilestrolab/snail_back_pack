@@ -1,0 +1,28 @@
+Snail backpack code1
+=======================
+int time_on = 5;
+int time_off = 1000;
+int light_pin = 6;
+int sensor_pin = 4;
+int time_sensor = 205;
+
+void setup() {
+  // put your setup code here, to run once:
+Serial.begin(57600);
+pinMode(light_pin,OUTPUT);
+pinMode(sensor_pin,INPUT);
+}
+
+
+void loop() {
+  // put your main code here, to run repeatedly:
+digitalWrite(light_pin,HIGH);
+delay(time_on);
+
+int sensor = analogRead(sensor_pin);
+Serial.println(sensor);
+
+digitalWrite(light_pin,LOW);
+delay(time_off);
+
+}

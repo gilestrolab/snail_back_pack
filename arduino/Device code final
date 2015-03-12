@@ -1,0 +1,43 @@
+//Device Code oversampling
+
+
+int time_on = 5000;//us
+int time_off = 145;
+int light_pin = 6;
+int sensor_pin = 4;
+int N = 256;
+int oversampling_delay = 100; //us
+
+
+void setup() {
+  // put your setup code here, to run once:
+Serial.begin(57600);
+pinMode(light_pin,OUTPUT);
+pinMode(sensor_pin,INPUT);
+}
+
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  float accum = 0;
+  
+  digitalWrite(light_pin,HIGH);
+  delayMicroseconds(time_on);
+  
+  //sample as many times as N
+    for (int i = 0; i < N; i++) {
+
+    // We increment the accumulator by the value in the phototransistor pin
+    accum += analogRead(sensor_pin);
+
+    int sensor = analogRead(sensor_pin);
+    delayMicroseconds(oversampling_delay);
+
+    }
+  digitalWrite(light_pin,LOW);
+  delay(time_off);
+  
+  accum = accum / N;
+  Serial.println(accum);
+  
+}

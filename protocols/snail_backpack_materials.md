@@ -6,7 +6,8 @@ Snail Housing
 
 General
 - [x] soil
-- [ ] food: ration 3:3:1 plain flour, grain flour, limestone flour mix. Consider adding fungicide (kelp powder?)
+- [x] food: ration 3:3:1 plain flour, grain flour, limestone flour mix. Consider adding fungicide (Nipagin or kelp powder?)
+* current protocol may vary (nipagin info http://www.aako.nl/product-groups/personal-hair-care/products/preservative-biocide/nipagin-m-sodium)
 - [x] food bowls (currently using petridishes)
 - [x] water spray
 - [ ] incubator (20-25°C, humidity control and covered from external environmental light)

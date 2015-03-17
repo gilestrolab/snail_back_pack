@@ -11,6 +11,7 @@ General
 - [x] water spray
 - [ ] incubator (20-25°C, humidity control and covered from external environmental light)
 - [x] light/dark switching timer
+- [x] weighing scale
 
 Per snail
 - [x] container boxes for storage (currently have 9 for storage hosting a total of 35 viable snails, on average 4 per box)

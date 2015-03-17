@@ -6,7 +6,7 @@ Snail Housing
 
 General
 - [ ] soil
-- [ ] food: ration 3:3:1 plain flour, grain flour, limestone flour mix. Consider adding antifungal
+- [ ] food: ration 3:3:1 plain flour, grain flour, limestone flour mix. Consider adding fungicide
 - [x] food bowls (currently using petridishes)
 - [x] water spray
 - [ ] incubator (20-25°C, humidity control and covered from external environmental light)

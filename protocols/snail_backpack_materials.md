@@ -5,7 +5,7 @@ Snail Housing
 ---------------------------
 
 General
-- [ ] soil
+- [x] soil
 - [ ] food: ration 3:3:1 plain flour, grain flour, limestone flour mix. Consider adding fungicide (kelp powder?)
 - [x] food bowls (currently using petridishes)
 - [x] water spray
@@ -19,7 +19,8 @@ Per snail
 Snail Backpack
 ---------------------------
 General
-- [ ] thin wires http://uk.rs-online.com/web/p/flat-ribbon-cable/8112160/
+- [ ] thin wires http://uk.rs-online.com/web/p/flat-ribbon-cable/8112160/; wires
+http://www.kobakant.at/DIY/?p=514
 - [ ] USB hub
 - [x] soldering metal filler
 - [x] superglue

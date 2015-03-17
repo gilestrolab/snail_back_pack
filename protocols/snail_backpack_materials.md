@@ -19,7 +19,7 @@ Per snail
 Snail Backpack
 ---------------------------
 General
-- [ ] thin wires (x4 colours)
+- [ ] thin wires http://uk.rs-online.com/web/p/flat-ribbon-cable/8112160/
 - [ ] USB hub
 - [x] soldering metal filler
 - [x] superglue

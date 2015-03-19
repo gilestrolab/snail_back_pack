@@ -26,6 +26,13 @@ http://www.kobakant.at/DIY/?p=514
 - [ ] USB hub
 - [x] soldering metal filler
 - [x] superglue
+- [ ] clear and black nail polish
+* Clear nail polish
+http://www.amazon.co.uk/Beauty-UK-Hardener-Strengthener-Treatment/dp/B00KVE5IAW/ref=sr_1_13?ie=UTF8&qid=1426771736&sr=8-13&keywords=long+lasting+nail+polish+top
+* Black nail polish
+http://www.amazon.co.uk/Barry-Nail-Paint-47-Black/dp/B001TH8NYS/ref=sr_1_1?ie=UTF8&qid=1426771840&sr=8-1&keywords=long+lasting+nail+polish+black​
+- [ ] acetone (to remove nail polish)
+* Nail polish remover - acetone http://www.amazon.co.uk/Colour-Culture-Artificial-Remover-Aceton/dp/B006ISCFI8/ref=sr_1_1?ie=UTF8&qid=1426771919&sr=8-1&keywords=nail+acetone
 - [ ] flux (have some, but need higher amounts)
 - [ ] dental cement (have some, but need higher amounts)
 - [ ] chemicals to dissolve dental cement and superglue, but not damage the backpack

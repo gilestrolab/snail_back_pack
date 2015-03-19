@@ -36,6 +36,7 @@ http://www.amazon.co.uk/Barry-Nail-Paint-47-Black/dp/B001TH8NYS/ref=sr_1_1?ie=UT
 - [ ] flux (have some, but need higher amounts)
 - [ ] dental cement (have some, but need higher amounts)
 - [ ] chemicals to dissolve dental cement and superglue, but not damage the backpack
+- [ ] 3 or 6 pin female headers
 
 Per snail
 - [ ] arduino nano 5V x10 

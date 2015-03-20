@@ -12,22 +12,22 @@ Housing
 * air holes, but tight escape-proof lid;
 * preferably transparent tank (day&night);
 * thermometer for temperature monitor.
-* 
+
 
 Food
 -----
-*flour mix
+* flour mix
 
 
 Other instruments
 -------------------
 * brush/toothbrush to clean the shells for device adhesion
 * water sprayer
-* 
+ 
 
 
 
 Device optimisation
 ---------------------
 * use light diffraction to expand irradiated area
-* 
+ 

@@ -1,10 +1,15 @@
 Title
 ========
 
-Description
+Aim
 ------------
 
+Protocol
+------------
 
-* stuff
-* things
-* ...
+* a
+* b
+* c
+
+
+

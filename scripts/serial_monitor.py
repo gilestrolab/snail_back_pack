@@ -26,6 +26,13 @@ import glob
 
 
 _N_POINTS = 200
+_COLOUR_MAP = [(255, 255, 0),
+               (0, 255, 255),
+               (255, 0, 255),
+               (0, 0, 255),
+               (0, 255, 0),
+               (255, 0, 0),
+               ]
 DISPLAY_WIDTH, DISPLAY_HEIGHT = 1200, 520
 
 
@@ -47,35 +54,59 @@ def plot(screen, time_queue, value_queue, window_size):
     t = np.array(list(time_queue))
     # y values
     values = np.array(list(value_queue), dtype=np.float32)
-    
+
     # We scale the signal so that all values lie between 0 and 1
 
-    new_y =  values - np.min(values,0)
+    new_y = values - np.min(values,0)
     # the maximal value in y
-    mmax = np.max(new_y,0)
+    mmax = np.max(new_y, 0)
     # we ensure no division by 0 can happen
-    if mmax == 0:
+
+    if np.any(mmax == 0):
+        print "avoiding div by 0; not plotting"
         return
     # after that new_y is between 0 and 1
-    new_y /= np.max(new_y,0)
-    
+    new_y /= np.max(new_y, 0)
+
+    # flip
+    new_y = 1. - new_y
+
+    ncols = new_y.shape[1]
     # Now, we scale new_y to the fit int the plotting window
-    new_y *= DISPLAY_HEIGHT
-    new_y = DISPLAY_HEIGHT - new_y
-    
+    new_y *= DISPLAY_HEIGHT / ncols
+    new_y += DISPLAY_HEIGHT * np.arange(ncols)/ncols
+
+
+
     #we express time as a proportion of the window size
     new_t = t - t[0]
     new_t *= (DISPLAY_WIDTH/float(window_size))
 
     # Clear the window (filling with black)
-    screen.fill((0,0,0))
+    screen.fill((0, 0, 0))
+    # Display some text
+    font = pygame.font.Font(None, 36)
 
-    # Creating points (i.e. `x,y` tuples of int values)
-    pts = [(int(x),int(y)) for x,y in zip(new_t, new_y )]
-    # Then drawing in yellow
-    pygame.draw.lines(screen, (255, 255, 0),False, pts, 3)
+    for c in range(ncols):
+        y = new_y[:, c]
+        # Creating points (i.e. `x,y` tuples of int values)
+        pts = [(int(x), int(y)) for x,y in zip(new_t, y)]
+        # Then drawing in yellow
+
+        ymin = c * DISPLAY_HEIGHT/ncols
+
+        p1, p2 = (0, ymin), (DISPLAY_WIDTH, ymin)
+        pygame.draw.aalines(screen, (128, 128, 128), False, [p1, p2])
+        pygame.draw.lines(screen, _COLOUR_MAP[c], False, pts, 3)
+
+        mean_y = round(np.mean(values[:, c]), 3)
+        sd_y = round(np.std(values[:, c]), 3)
+        text = font.render(str((mean_y, sd_y)), 1, (255, 255, 255))
+
+        screen.blit(text, (0,ymin))
+
     pygame.display.flip()
-    
+
 
 
 def serial_ports():
@@ -133,7 +164,8 @@ if __name__ == "__main__":
         print "Scanning serial ports..."
         ports = serial_ports()
         if len(ports) == 0:
-            raise Exception("No serial port found. Ensure your device is plugged. You ab also explicitly use the option `--port`")
+            raise Exception("No serial port found. "
+                            "Ensure your device is plugged. You ab also explicitly use the option `--port`")
         elif len(ports) > 2:
             print "%i serial ports found:\n %s" % (len(ports), "\n\t".join(ports))
         port = ports[0]
@@ -160,7 +192,7 @@ if __name__ == "__main__":
     with open(out_file, "w") as f:
         try:
             # Header of a csv like file
-            f.write("t, y\n")
+            # f.write("t, y\n")
 
             # Infinite loop
             while True:
@@ -170,7 +202,8 @@ if __name__ == "__main__":
                 now = time.time()
                 # we try to convert the line to an integer value
                 try:
-                    value =  float(line)
+                    values = [float(v) for v in line.split(',')]
+                    # value = float(line)
 
                 # If something goes wrong, we do not stop, but we print the error message
                 except ValueError as e:
@@ -178,14 +211,14 @@ if __name__ == "__main__":
                     continue
 
                 # The relative time from the start of the program is `dt`
-                dt =  now - start
+                dt = now - start
 
                 # We write a formatted line to the end of the result file
-                f.write("%f, %f\n" % (dt, value))
+                f.write(line + '\n')
 
                 # We append relative time and value to their respective queues
                 time_queue.append(dt)
-                value_queue.append(value)
+                value_queue.append(values)
 
                 # We wait to have at least five points AND three seconds of data
                 if time_queue[-1] < 3 or len(time_queue) < 5:
@@ -204,7 +237,6 @@ if __name__ == "__main__":
                 for et in pygame.event.get():
                     if et.type == pygame.QUIT:
                         raise KeyboardInterrupt
-
 
         except KeyboardInterrupt:
             print "Interrupting program..."

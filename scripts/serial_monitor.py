@@ -24,7 +24,7 @@ import sys
 import glob
 
 
-_BAUD = 57600
+
 _N_POINTS = 200
 DISPLAY_WIDTH, DISPLAY_HEIGHT = 1200, 520
 
@@ -119,12 +119,14 @@ if __name__ == "__main__":
     parser.add_argument('--port', help='port', type=str, default=None)
     parser.add_argument('--vws', help='The duration of the viewing window (s)', type=int, default=20)
     parser.add_argument('--out', help='An optional output file', type=str, default=os.devnull)
+    parser.add_argument('--baud', help='The baud rate of the serial port', type=int, default=57600)
 
     args = parser.parse_args()
     arg_dict = vars(args)
     window_size = arg_dict["vws"]
     out_file = arg_dict["out"]
-    
+    baud = arg_dict["baud"]
+
     # Here we open the serial port
     port = arg_dict["port"]
     if port is None:
@@ -138,7 +140,7 @@ if __name__ == "__main__":
         print "Using %s " % port
 
 
-    serial_port = serial.Serial(port, _BAUD, timeout=2)
+    serial_port = serial.Serial(port, baud, timeout=2)
     
     # We start a timer using the real time from the operating system
     start = time.time()

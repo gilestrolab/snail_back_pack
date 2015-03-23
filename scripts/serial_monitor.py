@@ -214,7 +214,7 @@ if __name__ == "__main__":
                 dt = now - start
 
                 # We write a formatted line to the end of the result file
-                f.write("%f,%s\n" % (t, line))
+                f.write("%f,%s\n" % (dt, line))
 
                 # We append relative time and value to their respective queues
                 time_queue.append(dt)

@@ -8,7 +8,6 @@ int N = 64; //oversampling
 #define aref_voltage 3.3;  // we tie 3.3V to ARef and measure it with a multimeter!
 float temperature_raw;
 
-
 void setup() {
 	// put your setup code here, to run once:
 	Serial.begin(57600);
@@ -37,7 +36,6 @@ void loop() {
 	accum = accum / N;
 
         temperature_raw = analogRead(temperature_pin);  //raw analog read from temperature pin
-
 
         float voltage = temperature_raw * aref_voltage; //float voltage = temperature_raw;//convert raw temperature reading to degrees celcius
         voltage /= 1024.0; 

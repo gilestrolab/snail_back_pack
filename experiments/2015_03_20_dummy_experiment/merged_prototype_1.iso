@@ -1,0 +1,56 @@
+int time_on = 5000;//us
+int time_off = 200; // time delay
+int light_pin = 6; //LED light pin
+int sensor_pin = 4; //light sensor pin
+int temperature_pin = 3;
+int N = 64; //oversampling
+
+#define aref_voltage 3.3;  // we tie 3.3V to ARef and measure it with a multimeter!
+float temperature_raw;
+
+
+void setup() {
+	// put your setup code here, to run once:
+	Serial.begin(57600);
+	pinMode(light_pin,OUTPUT);
+	digitalWrite(light_pin,HIGH);
+        pinMode(temperature_pin,INPUT);
+	pinMode(sensor_pin,INPUT);
+	analogReference(EXTERNAL); //to set aref at 3.3V
+}
+
+void loop() {
+	unsigned long t0 = millis();
+
+	float accum = 0;
+	
+	digitalWrite(light_pin,HIGH);
+	delayMicroseconds(time_on);
+	
+	    //sample as many times as N
+	    for(int i = 0; i < N; i++) {
+	  	accum += analogRead(sensor_pin); // increment the accumulator by the value in the phototransistor pin
+	    }
+
+        digitalWrite(light_pin, LOW);
+	
+	accum = accum / N;
+	Serial.println(accum); //sensor pin reading
+
+        temperature_raw = analogRead(temperature_pin);  //raw analog read from temperature pin
+        Serial.println("Temperature Reading");
+        Serial.println(temperature_raw);
+
+        float voltage = temperature_raw * aref_voltage; //float voltage = temperature_raw;//convert raw temperature reading to degrees celcius
+        voltage /= 1024.0; 
+
+        float temperature_C = (voltage - 0.5) * 100 ; //converting from 10 mv per degree wit 500 mV offset
+                                               //to degrees ((volatge - 500mV) times 100)
+        Serial.println(temperature_C); // now print out the temperature //Serial.println(" degrees C");
+
+        unsigned long t1 = millis();
+        unsigned long dt = t1 - t0;
+	
+        delay(time_off - dt);
+
+}

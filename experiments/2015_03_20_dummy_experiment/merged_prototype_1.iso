@@ -1,6 +1,6 @@
-int time_on = 5000;//us
-int time_off = 200; // time delay
-int light_pin = 1; //LED light pin
+int time_on = 25;//ms
+int time_off = 200; // sampling periode ms
+int light_pin = 2; //LED light pin
 int sensor_pin = 3; //light sensor pin
 int temperature_pin = 5;
 int N = 64; //oversampling
@@ -24,7 +24,7 @@ void loop() {
 	float accum = 0;
 	
 	digitalWrite(light_pin,HIGH);
-	delayMicroseconds(time_on);
+	delay(time_on);
 	
 	    //sample as many times as N
 	    for(int i = 0; i < N; i++) {
@@ -42,8 +42,8 @@ void loop() {
 
         float temperature_C = (voltage - 0.5) * 100 ; //converting from 10 mv per degree wit 500 mV offset
                                                //to degrees ((volatge - 500mV) times 100)
-        //Serial.print(accum); //sensor pin reading
-        //Serial.print(",");
+        Serial.print(accum); //sensor pin reading
+        Serial.print(",");
         Serial.println(temperature_C); // now print out the temperature //Serial.println(" degrees C");
 
         unsigned long t1 = millis();

@@ -2,5 +2,5 @@ ID,box_N,data_file,mass_g,size_mm,date,time_begin,time_end,notes
 001,12,temp_001.csv,12.18,3.0x3.3,27-29_march, ,16:33,
 002,12,temp_002.csv, , ,28-29_march,17:53,19:59,
 003,12,temp_003.csv, , ,29-30_march,20:37,15:30,
-004,12,temp_004.csv, , ,30-31_march,17:21,18:44,
+004,12,temp_004.csv, , ,30-31_march,17:21,18:44,x
 005,12,temp_005.csv, , ,31-01_april,19:54,20:04,

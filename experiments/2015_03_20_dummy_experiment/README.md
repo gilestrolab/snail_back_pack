@@ -1,4 +1,4 @@
-Temperature experiment
+Temperature experiment: trial 1
 ========
 
 Aim
@@ -10,21 +10,24 @@ Null hypothesis: temperature does not affect heart rate
 
 Materials
 -------------
-* 10 snails per trial (use same or different?)
+* 5 snails
 * Snail backpack (heart rate and temperature monitor)
 * Arduino UNO + data recording device
 * one snail per box
-* incubator at 18, 23 and 28 degrees
-* food mix with fungicide
-* soil with fungicide (need to be tested)
+* incubator at 40C
+* empty snail box
+* ice box
+
 
 Protocol
 -----------
-* install snail backpack on 10 snails
-* 12:12 day night cycle
-* constant humidity and temperature
-* measure for a 4-7 days at 18, 23 and 28 degrees (each one week or all together?)
-* analyse data
+* set the incubator at 40C
+* close the aperture of the snail shell using tissue and tape
+* install snail backpack on 1 snail with superglue
+* put the empty snail box in the icebox
+* place the snail inside the snailbox and put the apparatus in the incubator
+* measure heartrate and temperature of the snail while it is inside the shell
+* stop the measurement when the temperature reaches 39-40C
 
 
 Snail backpack protocol
@@ -36,6 +39,11 @@ Heart rate sensor:
 * insert light sensor into the blackframe and test
 
 Temperature sensor:
+* glue temperature sensor to the shell
 
+Removal of snail_backpack
+* use 50% acetone solution
+* submerge the LED light for a minute and carefully detach them from the shell
+* repeat same procedure for the temperature sensor and the light sensor
 
 

@@ -1,0 +1,9 @@
+Day,RM_BIG,S1,S2,S3,S4
+d1,x,x,x,x,x
+d2,no_feces,mould,x,x,x
+d3,mould,mould,x,x,x
+d4,-,-,-,-,-
+d5,-,-,-,-,-
+d6,soil_mound,soil_mould+brown_fec,soil_mould,soil_mould+feces,soil_mould,
+d7,x,x,soil_mould,soil_mould,food+soil_mould
+d8,no_white_feces,no_white+no_mould,no_white+no_mould,x_+white_feces,mould

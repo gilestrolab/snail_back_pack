@@ -1,4 +1,4 @@
-# start time (secs),minute,observed frequency,"quality (5-best, 0-worst)",comment
+#  start time (secs),minute,observed frequency,"quality (5-best, 0-worst)",comment
 st,min,ofreq,q,c
 150.0424,3,31,2,"small sections of periodicity, varied baseline, some bounce"
 570.0572,10,35,5,"periodic, fairly flat baseline, very little bounce"

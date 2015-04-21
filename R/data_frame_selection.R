@@ -1,4 +1,5 @@
-DATA_FILE <- "/home/quentin/Desktop/ref_data_heart_snail.txt"
+rm(list=ls())
+DATA_FILE <- "/home/alysia/Documents/ref_data_heart_snail.txt"
 SAMPLING_FREQUENCY <- 5 # in Hz
 
 
@@ -10,12 +11,20 @@ my_freq_fun <- function(y, fs){
 
 
 #######################################################
-ref_df <- read.csv("ref_file.csv", comment.char="#")
+ref_df <- read.csv("ref.csv", comment.char="#")
 heterogeneous_df <- read.csv(DATA_FILE, head=F)
 colnames(heterogeneous_df) <- c("t", "y")
 
+
 # interpolation goes here
 # it generates a ned df called `df`
+out_t <- seq(from=0, to=max(heterogeneous_df$t), by= 1/SAMPLING_FREQUENCY)
+df_v1 <- approx(x=heterogeneous_df$t, y=heterogeneous_df$y, xout=out_t, method='linear')
+
+
+df_v2 <- data.frame(df_v1)
+colnames(df_v2) <- c("t", "y")
+df <- na.omit(df_v2)
 
 
 df$min <- floor(df$t /60) + 1
@@ -23,7 +32,7 @@ mins_of_interest_df <- subset(df, df$min %in% ref_df$min)
 list_of_mins <- split(mins_of_interest_df, mins_of_interest_df$min)
 
 
-pdf("/tmp/plot.pdf",w=16,h=9)
+pdf("plot.pdf",w=16,h=9)
 lapply(list_of_mins, function(sdf){
 		title <- sdf$min[1]
 		plot(y ~ t,sdf, type='l', col="blue", lwd=2,main=title)
@@ -40,6 +49,14 @@ freq_meth2 <- sapply(list_of_mins, function(sdf){
 	})
 	
 ref_df <- cbind(ref_df,freq)
+
+
+#diff(list_of_mins[[1]]$t)
+#table(diff(list_of_mins[[1]]$t))
+
+
+
+
 
 #~ #split data frames
 #~ df$min <- round(df$V1 /60)

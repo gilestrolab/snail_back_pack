@@ -3,9 +3,10 @@ DATA_FILE <- "/home/alysia/Documents/ref_data_heart_snail.txt"
 SAMPLING_FREQUENCY <- 5 # in Hz
 
 
-my_freq_fun <- function(y, fs){
-	#do something with y
-	return(1)
+my_freq_fun <- function(y, fs, ...){
+	sp <- seewave::spec(y,f=fs)
+	f <- seewave::fpeaks(sp, f=fs,nmax=1)
+	return(f[1,1])
 }
 
 
@@ -41,21 +42,41 @@ dev.off()
 
 
 freq_meth1 <- sapply(list_of_mins, function(sdf){
-		my_freq_fun_meth1(sdf$y,fs=SAMPLING_FREQUENCY)
+		sp <- seewave::spec(sdf$y,f=SAMPLING_FREQUENCY)
+		f <- seewave::fpeaks(sp, f=SAMPLING_FREQUENCY,nmax=1)
 	})
-	
-freq_meth2 <- sapply(list_of_mins, function(sdf){
-		my_freq_fun_meth2(sdf$y,fs=SAMPLING_FREQUENCY)
-	})
-	
-ref_df <- cbind(ref_df,freq)
 
+
+freqdf1 <- data.frame(freq_meth1)
+freq1 <- sapply(freqdf1, "[", 1)
+ref_df <- cbind(ref_df,freq1)
+
+
+freq_meth2 <- sapply(list_of_mins, k=51, function(sdf, k){
+		low_c <- runmed(sdf$y, k)
+		sp <- seewave::spec(low_c,f=SAMPLING_FREQUENCY)
+		f <- seewave::fpeaks(sp, f=SAMPLING_FREQUENCY,nmax=1)
+		f*1000
+	})
+
+	
+freqdf2 <- data.frame(freq_meth2)
+freq2 <- sapply(freqdf2, "[", 1)
+ref_df <- cbind(ref_df,freq2)
+
+
+plot(freq1 ~ of, ref_df, pch=as.character(q), col=q)
+mod <- lm(freq1 ~ of, ref_df
+
+test <- list_of_mins[[1]]
+plot(y ~ t,test, type='l')
+test$low_comp <- runmed(test$y,k=51)
+lines(low_comp ~ t,test, col="red")
+test$high_comp <- test$y - test$low_comp
+plot(high_comp ~ t,test, type='l')
 
 #diff(list_of_mins[[1]]$t)
 #table(diff(list_of_mins[[1]]$t))
-
-
-
 
 
 #~ #split data frames

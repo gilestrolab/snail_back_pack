@@ -19,6 +19,10 @@ my_freq_fun_runmed <- function(y, fs,k){
 	
 	return(f[1,1]*1000)
 }
+#k=11 seems to work best
+
+
+
 
 
 apply_freq_meth <- function(chunks, FUN, fs, ...){
@@ -57,15 +61,13 @@ dev.off()
 
 
 results <- list(
-	#meth_runmed51 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=51),
-	meth_runmed12 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=12),
-	#meth_runmed37 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=37),
-	#meth_runmed43 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=43),
-	meth_first = apply_freq_meth(chunks=list_of_mins, my_freq_fun, fs=5)
+	meth_first = apply_freq_meth(chunks=list_of_mins, my_freq_fun, fs=5),
+	meth_runmed51 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=51),
+	meth_runmed11 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=11)
 	)
 
-
 #ref_df <- cbind(ref_df, as.data.frame(results))
+
 
 tmp_df <- data.frame( 
 	
@@ -81,9 +83,16 @@ long_df <- merge(ref_df, tmp_df)
 ggplot(long_df,aes(y = fc, x =of,colour=method,shape=method)) +
 geom_point() + geom_smooth(method="lm", fill=NA)
 
+df_meth_list <- split(long_df, long_df$method)
 
-
-
+lm_mat <- sapply(df_meth_list, function(d){
+	mod <- lm(fc~of, d)
+	coefs <- coefficients(mod)
+	rsqr <- summary(mod)$r.squared
+	out <- c(coefs, rsqr)
+	names(out) <- c("b", "a", "rsqr")
+	return(out)
+	})
 #################
 
 plot(freq1 ~ of, ref_df, pch=as.character(q), col=q)
@@ -97,3 +106,21 @@ test$high_comp <- test$y - test$low_comp
 plot(high_comp ~ t,test, type='l')
 
 ##################
+
+
+
+# length of signal
+n <- 10000
+ 
+# the frequency to be kept
+F <- 500
+F0 <- 2 * F / n
+ 
+# input signal
+sig <- add_sin_sig(n, c(300,500,700,1100))
+ 
+# filter specification
+filter <- cheby1(6,2,c(F0-F0*.1,F0+F0*.1),type="pass")
+ 
+# filtered signal
+sig2 <- signal::filter(filter, x=sig)

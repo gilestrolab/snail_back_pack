@@ -59,32 +59,42 @@ lapply(list_of_mins, function(sdf){
 dev.off()
 
 
-
+#list of results from methods and ggplot generation
 results <- list(
 	meth_first = apply_freq_meth(chunks=list_of_mins, my_freq_fun, fs=5),
 	meth_runmed51 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=51),
 	meth_runmed11 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=11)
 	)
+	
+
 
 #ref_df <- cbind(ref_df, as.data.frame(results))
 
 
 tmp_df <- data.frame( 
-	
 	method=rep(names(results),sapply(results,length)),
 	fc=do.call('c',results),
 	min=ref_df$min
-	
 	)
 	
+
 long_df <- merge(ref_df, tmp_df)
 	
+
+ymax <- max(long_df$fc)
+xmax <- max(long_df$of)
 	
-ggplot(long_df,aes(y = fc, x =of,colour=method,shape=method)) +
-geom_point() + geom_smooth(method="lm", fill=NA)
+	
+plt <- ggplot(long_df,aes(y = fc, x =of,colour=method,shape=method)) +
+geom_point() + geom_smooth(method="lm", fill=NA) + 
+coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25))
+
+
+plt + abline(lm(x=y), colour="black")
 
 df_meth_list <- split(long_df, long_df$method)
 
+#linear model info matrix
 lm_mat <- sapply(df_meth_list, function(d){
 	mod <- lm(fc~of, d)
 	coefs <- coefficients(mod)
@@ -93,6 +103,8 @@ lm_mat <- sapply(df_meth_list, function(d){
 	names(out) <- c("b", "a", "rsqr")
 	return(out)
 	})
+	
+
 #################
 
 plot(freq1 ~ of, ref_df, pch=as.character(q), col=q)

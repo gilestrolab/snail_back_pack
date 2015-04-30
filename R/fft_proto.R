@@ -12,4 +12,4 @@ fake_ts <- low_fs_noise + beats + white_noise
 plot(fake_ts, t='l')
 
 #oce::pwelch 
-plot(pspectrum(fake_ts))
+plot(psd::pspectrum(fake_ts))

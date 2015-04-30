@@ -87,10 +87,13 @@ xmax <- max(long_df$of)
 	
 plt <- ggplot(long_df,aes(y = fc, x =of,colour=method,shape=method)) +
 geom_point() + geom_smooth(method="lm", fill=NA) + 
-coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25))
+coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +
+geom_abline(group=1, colour="grey")
 
 
-plt + abline(lm(x=y), colour="black")
+x=seq(from=0, to=xmax, by=1)
+y <- x
+
 
 df_meth_list <- split(long_df, long_df$method)
 

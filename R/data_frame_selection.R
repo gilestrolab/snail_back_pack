@@ -19,7 +19,7 @@ my_freq_fun_runmed <- function(y, fs,k){
 	
 	return(f[1,1]*1000)
 }
-#k=11 seems to work best
+#k=43 seems to work best
 
 
 
@@ -62,11 +62,10 @@ dev.off()
 #list of results from methods and ggplot generation
 results <- list(
 	meth_first = apply_freq_meth(chunks=list_of_mins, my_freq_fun, fs=5),
-	meth_runmed51 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=51),
-	meth_runmed11 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=11)
+	meth_runmed43 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=43),
+	meth_runmed45 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=45)
 	)
 	
-
 
 #ref_df <- cbind(ref_df, as.data.frame(results))
 
@@ -89,10 +88,7 @@ plt <- ggplot(long_df,aes(y = fc, x =of,colour=method,shape=method)) +
 geom_point() + geom_smooth(method="lm", fill=NA) + 
 coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +
 geom_abline(group=1, colour="grey")
-
-
-x=seq(from=0, to=xmax, by=1)
-y <- x
+plt
 
 
 df_meth_list <- split(long_df, long_df$method)
@@ -107,6 +103,11 @@ lm_mat <- sapply(df_meth_list, function(d){
 	return(out)
 	})
 	
+
+testx <- fft(test$y, inverse=FALSE)
+test_sp1 <- spectrum(testx, method=c("pgram"))
+test_sp2 <- spectrum(testx, method=c("pgram", "ar"))
+
 
 #################
 

@@ -13,3 +13,4 @@ plot(fake_ts, t='l')
 
 #oce::pwelch 
 plot(psd::pspectrum(fake_ts))
+ 

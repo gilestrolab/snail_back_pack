@@ -14,3 +14,4 @@ plot(fake_ts, t='l')
 #oce::pwelch 
 plot(psd::pspectrum(fake_ts))
  
+pwelch(testy, window=10, noverlap=5)

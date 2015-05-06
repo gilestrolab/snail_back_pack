@@ -14,4 +14,20 @@ plot(fake_ts, t='l')
 #oce::pwelch 
 plot(psd::pspectrum(fake_ts))
  
-pwelch(testy, window=10, noverlap=5)
+pw_test <- pwelch(fake_ts, window=4.7, noverlap=50, fs=5)
+f <- seewave::fpeaks(pw_test$spec, f=5,nmax=2)
+f*1000
+
+pspec_test <- pspectrum(fake_ts, x.frqsamp=5)
+f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1)
+f*1000
+
+pspec_test <- pspectrum(bwf_test$trend, x.frqsamp=5)
+f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1)
+f*1000
+
+bwf_test <- bwfilter(test3$y,freq=4,drift=TRUE)
+
+pspec_test <- pspectrum(bwf_test$trend, x.frqsamp=5)
+f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1)
+f*1000

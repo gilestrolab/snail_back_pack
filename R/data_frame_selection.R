@@ -38,10 +38,11 @@ source("~/Documents/snail_back_pack/R/funs.R")
 #list of results from methods and ggplot generation
 results <- list(
 	#meth_first = apply_freq_meth(chunks=list_of_mins, my_freq_fun, fs=5),
-	meth_runmed43 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=43),
+	#meth_runmed43 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=43),
 	#meth_runmed45 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=45),
-	meth_pspec = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec, fs=5),
+	#meth_pspec = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec, fs=5),
 	meth_pspec_bwfilter = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec_bwfilter, fs=5)
+	#meth_pspec_runmed = apply_freq_meth(chunk=list_of_mins, freq_fun_pspec_runmed, fs=5, k=43)
 	)
 	
 
@@ -58,15 +59,21 @@ tmp_df <- data.frame(
 long_df <- merge(ref_df, tmp_df)
 	
 
-ymax <- max(long_df$fc)
-xmax <- max(long_df$of)
+ymax <- max(c(long_df$fc,long_df$of))
+xmax <- ymax
 	
 	
 plt <- ggplot(long_df,aes(y = fc, x =of,colour=method,shape=method)) +
-geom_point() + geom_smooth(method="lm", fill=NA) + 
-coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +
-geom_abline(group=1, colour="grey")
+	geom_point() + geom_smooth(method="lm", fill=NA) + 
+	coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +
+	geom_abline(group=1, colour="grey")
 plt
+
+
+plt <- ggplot(subset(long_df, q >= 4),aes(y = fc, x =of,colour=method,shape=method)) +
+	geom_point() + geom_smooth(method="lm", fill=NA) + 
+	coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +
+	geom_abline(group=1, colour="grey")
 
 
 df_meth_list <- split(long_df, long_df$method)

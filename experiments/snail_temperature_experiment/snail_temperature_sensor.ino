@@ -1,5 +1,5 @@
 int time_on = 25;//ms
-int sampling_frequency_sec = 30;
+int sampling_frequency_sec = 2;
 int time_off = sampling_frequency_sec *1000; // sampling periode ms
 int temperature_sensor_pin = 5;
 int N = 64; //oversampling

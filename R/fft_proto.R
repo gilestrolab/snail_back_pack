@@ -26,7 +26,7 @@ pspec_test <- pspectrum(bwf_test$trend, x.frqsamp=5)
 f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1)
 f*1000
 
-bwf_test <- bwfilter(test3$y,freq=4,drift=TRUE)
+bwf_test <- bwfilter(fake_ts,freq=4,drift=TRUE)
 
 pspec_test <- pspectrum(bwf_test$trend, x.frqsamp=5)
 f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1)

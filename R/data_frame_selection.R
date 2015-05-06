@@ -37,9 +37,9 @@ source("~/Documents/snail_back_pack/R/funs.R")
 
 #list of results from methods and ggplot generation
 results <- list(
-	meth_first = apply_freq_meth(chunks=list_of_mins, my_freq_fun, fs=5),
-	#meth_runmed43 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=43),
-	meth_runmed45 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=45),
+	#meth_first = apply_freq_meth(chunks=list_of_mins, my_freq_fun, fs=5),
+	meth_runmed43 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=43),
+	#meth_runmed45 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=45),
 	meth_pspec = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec, fs=5),
 	meth_pspec_bwfilter = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec_bwfilter, fs=5)
 	)

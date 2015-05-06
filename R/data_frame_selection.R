@@ -33,6 +33,7 @@ lapply(list_of_mins, function(sdf){
 	})
 dev.off()
 
+source("~/Documents/snail_back_pack/R/funs.R")
 
 #list of results from methods and ggplot generation
 results <- list(

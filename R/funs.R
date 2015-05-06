@@ -1,4 +1,3 @@
-source("~/Documents/snail_back_pack/R/data_frame_selection.R")
 
 my_freq_fun <- function(y, fs){
 	sp <- seewave::spec(y,f=fs)

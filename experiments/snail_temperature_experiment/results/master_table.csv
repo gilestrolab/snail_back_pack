@@ -15,7 +15,7 @@ ID, temp_file, heart_file, th_file, date_begin, date_end, box_N, mass_g, size_cm
 022, temp_05.csv, heart_010.csv, th_05.csv, dd/mm/15, dd/mm/15, S, g, cm, -
 023, temp_05.csv, heart_010.csv, th_05.csv, dd/mm/15, dd/mm/15, S, g, cm, -
 
--,-,-,-,-,-,-,-,-,-
+,,,,,,,,,,,
 
 ID, file, , , date_begin, date_end, box_N, mass_g, size_cm, notes,,
 

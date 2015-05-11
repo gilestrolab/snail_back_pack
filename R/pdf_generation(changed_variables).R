@@ -1,8 +1,10 @@
 
 
-DATA_FILE <- "heart_011.csv"
+DATA_FILE <- "heart_011.csv"  #####change file name here
 SAMPLING_FREQUENCY <- 5 # in Hz
 
+
+#####interpolation
 heterogeneous_df <- read.csv(DATA_FILE, head=F)
 colnames(heterogeneous_df) <- c("t", "y")
 df_v1 <- approx(x=heterogeneous_df$t, y=heterogeneous_df$y, xout=heterogeneous_df$t, method='linear')
@@ -11,9 +13,10 @@ colnames(df_v2) <- c("t", "y")
 df <- na.omit(df_v2)
 
 
+######pdf generation
 df$min <- round(df$t /60)
 ldf <- split(df, df$min)
-pdf("visualtest.pdf",w=16,h=9)
+pdf("visualtest.pdf",w=16,h=9)  #####cahnge pdf name here
 par(mfrow=c(2,1))
 for(d in ldf){
 h <- round(d$t[1] / 3600,3)

@@ -1,5 +1,9 @@
 rm(list=ls())
-DATA_FILE <- "/home/alysia/Documents/snail_back_pack/R/ref_data_heart_snail.txt"
+library(seewave)
+library(psd)
+library(mFilter)
+source("~/Documents/snail_back_pack/R/funs.R")
+DATA_FILE <- "/home/alysia/Documents/snail_back_pack/R/heart_009.csv"
 REF_FILE <- "/home/alysia/Documents/ref.csv"
 SAMPLING_FREQUENCY <- 5 # in Hz
 
@@ -25,6 +29,25 @@ df$min <- floor(df$t /60) + 1
 mins_of_interest_df <- subset(df, df$min %in% ref_df$min)
 list_of_mins <- split(mins_of_interest_df, mins_of_interest_df$min)
 
+pdf("/tmp/proto_plot.pdf",w=16,h=9)
+lapply(list_of_mins, function(l){
+	y <- l$y
+	t0 <- l$t[1]
+	title <- paste("pspec_bwfilter;", t0)
+	freq_fun_pspec_bwfilter(y, fs=5, dev=T, main=title)
+	})
+dev.off()
+
+
+pdf("/tmp/proto_plot.pdf",w=16,h=9)
+lapply(list_of_mins, function(l){
+	y <- l$y
+	t0 <- l$t[1]
+	title <- paste("pspec_bwfilter;", t0)
+	freq_fun_pspec_bwfilter(y, fs=5, dev=T, main=title)
+	})
+dev.off()
+
 
 pdf("plot.pdf",w=16,h=9)
 lapply(list_of_mins, function(sdf){
@@ -33,7 +56,6 @@ lapply(list_of_mins, function(sdf){
 	})
 dev.off()
 
-source("~/Documents/snail_back_pack/R/funs.R")
 
 #list of results from methods and ggplot generation
 results <- list(
@@ -55,21 +77,29 @@ tmp_df <- data.frame(
 	min=ref_df$min
 	)
 	
-
+	
 long_df <- merge(ref_df, tmp_df)
 	
 
-ymax <- max(c(long_df$fc,long_df$of))
+ymax <- max(c(long_df$fc,long_df$reof))
 xmax <- ymax
 	
+
 	
 plt <- ggplot(long_df,aes(y = fc, x =of,colour=method,shape=method)) +
 	geom_point() + geom_smooth(method="lm", fill=NA) + 
 	coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +
 	geom_abline(group=1, colour="grey")
-plt
 
 
+#by quality
+replt <- ggplot(long_df,aes(y = fc, x =reof,colour=method,shape=as.factor(q))) +
+	geom_point() + geom_smooth(method="lm", fill=NA) + 
+	coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +
+	geom_abline(group=1, colour="grey")
+
+
+#subset
 plt <- ggplot(subset(long_df, q >= 4),aes(y = fc, x =of,colour=method,shape=method)) +
 	geom_point() + geom_smooth(method="lm", fill=NA) + 
 	coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +

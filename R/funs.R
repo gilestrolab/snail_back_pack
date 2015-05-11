@@ -41,30 +41,30 @@ freq_fun_pspec_runmed <- function(y, fs, k){
 	return(f[1,1]*1000)
 }
 
-freq_fun_pspec_bwfilter <- function(y, fs, dev=TRUE){
+#generates original spectra and filtered spectra
+freq_fun_bwfilter <- function(y, fs, dev=TRUE,...){
 	bwf <- bwfilter(y,freq=4,drift=TRUE)
-	pspec_test <- pspectrum(bwf$trend, x.frqsamp=5)
-	pdf("proto_plot.pdf",w=16,h=9)
 	
-	plot(pspec_test,main="freq_fun_pspec_bwfilter")
+	if(dev == T){
+		plot(y,type="l",...)
+		plot(bwf$trend, type="l")
+	}
 	
-	f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1)
-	abline(v=f)
-	dev.off()
-	return(f[1,1]*1000)
 }
 
-freq_fun_pspec_bwfilter <- function(y, fs, dev=TRUE){
+#generates, original spectra, power spectrum, and fpeaks
+freq_fun_pspec_bwfilter <- function(y, fs, dev=TRUE,...){
 	bwf <- bwfilter(y,freq=4,drift=TRUE)
-	pspec_test <- pspectrum(bwf$trend, x.frqsamp=5)
-	pdf("proto_plot.pdf",w=16,h=9)
-	lapply(chunks, function(y){
-		plot(y,type="l")
-		plot(pspec_test,main="freq_fun_pspec_bwfilter")
-		abline(v=f)
-		f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1)
+	pspec_test <- pspectrum(bwf$trend, x.frqsamp=fs)
+	
+	if(dev == T){
+		plot(y,type="l",...)
+		plot(pspec_test,...)
+		f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1, plot=T, title=F)
+		title(round((f[1,1]*1000), digits=3), "Hz")
+		abline(v=(f[1,1]), col="red")
 	}
-	dev.off()
+	return(f[1,1]*1000)
 }
 
 apply_freq_meth <- function(chunks, FUN, fs, ...){

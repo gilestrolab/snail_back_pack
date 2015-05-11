@@ -3,7 +3,7 @@ library(seewave)
 library(psd)
 library(mFilter)
 source("~/Documents/snail_back_pack/R/funs.R")
-DATA_FILE <- "/home/alysia/Documents/snail_back_pack/R/heart_009.csv"
+DATA_FILE <- "/home/alysia/Documents/snail_back_pack/R/ref_data_heart_snail.txt"
 REF_FILE <- "/home/alysia/Documents/ref.csv"
 SAMPLING_FREQUENCY <- 5 # in Hz
 

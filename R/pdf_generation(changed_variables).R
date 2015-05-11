@@ -16,7 +16,7 @@ df <- na.omit(df_v2)
 ######pdf generation
 df$min <- round(df$t /60)
 ldf <- split(df, df$min)
-pdf("visualtest.pdf",w=16,h=9)  #####cahnge pdf name here
+pdf("visualtest.pdf",w=16,h=9)  #####change pdf name here
 par(mfrow=c(2,1))
 for(d in ldf){
 h <- round(d$t[1] / 3600,3)

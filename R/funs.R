@@ -17,16 +17,16 @@ my_freq_fun_runmed <- function(y, fs,k){
 }
 #k=43 seems to work best
 
-freq_fun_pwelch <- function(y, window, fs){
+freq_fun_pwelch <- function(y, window, fs, ...){
 	pw <- pwelch(y, window, noverlap=50, fs)
-	f <- seewave::fpeaks(pw$spec, f=fs,nmax=1)
+	f <- seewave::fpeaks(pw$spec, f=5,nmax=1)
 	
 	return(f[1,1]*1000)
 }
 
-freq_fun_pspec <- function(y, fs){
+freq_fun_pspec <- function(y, fs){ 
 	pspec_test <- pspectrum(y, x.frqsamp=fs)
-	f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1)
+	f <- seewave::fpeaks(pspec_test$spec, f=5,nmax=1)
 	
 	return(f[1,1]*1000)
 }
@@ -49,7 +49,7 @@ freq_fun_bwfilter <- function(y, fs, dev=TRUE,...){
 		plot(y,type="l",...)
 		plot(bwf$trend, type="l")
 	}
-	
+	return(f[1,1]*1000)
 }
 
 #generates, original spectra, power spectrum, and fpeaks

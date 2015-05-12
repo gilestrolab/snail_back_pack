@@ -21,33 +21,37 @@
 
 
 
-data_temp_file <- "~/Documents/temp_010.csv"
-dtf <- read.csv(data_temp_file, header=F)
-colnames(dtf) <- c("t", "I", "temp")
+#data_temp_file <- "~/Documents/temp_010.csv"
+#dtf <- read.csv(data_temp_file, header=F)
+#colnames(dtf) <- c("t", "I", "temp")
 
 
-temp910 <- "~/Documents/temp_011_012.csv"
-temp_file <- read.csv(temp910, header=F)
+temp11_12 <- "~/Documents/temp_011_012.csv"
+temp_file <- read.csv(temp11_12, header=F)
+
+heart12file <- "~/Documents/heart_012.csv"
+heart12 <- read.csv(heart12file, header=F)
+
+heart11file <- "~/Documents/heart_011.csv"
+heart11 <- read.csv(heart11file, header=F)
 
 
-heart9 <- "~/Documents/heart_012.csv"
-i_file <- read.csv(heart9, header=F)
-
-
-i_df <- data.frame(i_file)
+heart11_df <- data.frame(heart11)
+heart12_df <- data.frame(heart12)
 temp_df <- data.frame(temp_file)
+heart_df<- rbind(heart11_df, heart12_df)
 
 
-colnames(i_df) <- c("t", "I")
+colnames(heart12_df) <- c("t", "I")
 colnames(temp_df) <- c("t", "temp")
 
 
 #out_t <- seq(from=0, to=max(i_df$V2), by=1/5)
-df_v1 <- approx(x=temp_df$t, y=temp_df$temp, xout=round(i_df$t), method='linear')
+df_v1 <- approx(x=temp_df$t, y=temp_df$temp, xout=round(heart12_df$t), method='linear')
 df_v2 <- data.frame(df_v1)
 colnames(df_v2) <- c("t", "temp")
-df <- na.omit(df_v2)
-plot(df, type='l')
+temp_interp_df <- na.omit(df_v2)
+plot(temp_interp_df, type='l')
 
 
 
@@ -72,5 +76,36 @@ df_v2 <- data.frame(df_v1)
 colnames(df_v2) <- c("t", "T")
 df <- na.omit(df_v2)
 plot(df, type='l')
+
+
+
+
+
+
+
+
+
+
+
+heart12file <- "~/Documents/heart_012.csv"
+heart12 <- read.csv(heart12file, header=F)
+
+heart12_df <- data.frame(heart12)
+
+
+heart11file <- "~/Documents/heart_011.csv"
+heart11 <- read.csv(heart11file, header=F)
+
+heart11_df <- data.frame(heart11)
+
+
+
+
+
+
+
+
+
+
 
 

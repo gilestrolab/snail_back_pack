@@ -2,6 +2,7 @@ rm(list=ls())
 library(seewave)
 library(psd)
 library(mFilter)
+library(ggplot2)
 source("~/Documents/snail_back_pack/R/funs.R")
 DATA_FILE <- "/home/alysia/Documents/snail_back_pack/R/ref_data_heart_snail.txt"
 REF_FILE <- "/home/alysia/Documents/ref.csv"
@@ -59,12 +60,12 @@ dev.off()
 
 #list of results from methods and ggplot generation
 results <- list(
-	#meth_first = apply_freq_meth(chunks=list_of_mins, my_freq_fun, fs=5),
-	#meth_runmed43 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=43),
-	#meth_runmed45 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=45),
-	#meth_pspec = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec, fs=5),
-	meth_pspec_bwfilter = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec_bwfilter, fs=5)
-	#meth_pspec_runmed = apply_freq_meth(chunk=list_of_mins, freq_fun_pspec_runmed, fs=5, k=43)
+	
+	#meth_pspec_bwfilter = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec_bwfilter, fs=5)
+	meth_pwelch = apply_freq_meth(chunk=list_of_mins, freq_fun_pwelch, window=6, fs=5)
+	#meth_pspec = apply_freq_meth(chunk=list_of_mins, freq_fun_pspec, fs=5),
+	#meth_pwelch_runmed = apply_freq_meth(chunk=list_of_mins, freq_fun_pwelch_runmed, fs=5, k=43)
+	#meth_pwelch_bwfilter = apply_freq_meth(chunk=list_of_mins, freq_fun_pwelch_bwfilter, fs=5)
 	)
 	
 
@@ -86,21 +87,21 @@ xmax <- ymax
 	
 
 	
-plt <- ggplot(long_df,aes(y = fc, x =of,colour=method,shape=method)) +
+plt <- ggplot(long_df,aes(y = fc, x =reof,colour=method,shape=method)) +
 	geom_point() + geom_smooth(method="lm", fill=NA) + 
 	coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +
 	geom_abline(group=1, colour="grey")
 
 
 #by quality
-replt <- ggplot(long_df,aes(y = fc, x =reof,colour=method,shape=as.factor(q))) +
+plt <- ggplot(long_df,aes(y = fc, x =of,colour=method,shape=as.factor(q))) +
 	geom_point() + geom_smooth(method="lm", fill=NA) + 
 	coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +
 	geom_abline(group=1, colour="grey")
 
 
 #subset
-plt <- ggplot(subset(long_df, q >= 4),aes(y = fc, x =of,colour=method,shape=method)) +
+plt <- ggplot(subset(long_df, q >= 4),aes(y = fc, x =reof,colour=method,shape=method)) +
 	geom_point() + geom_smooth(method="lm", fill=NA) + 
 	coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +
 	geom_abline(group=1, colour="grey")
@@ -138,8 +139,14 @@ plot(high_comp ~ t,test, type='l')
 
 ##################
 
+	#meth_first = apply_freq_meth(chunks=list_of_mins, my_freq_fun, fs=5),
+	#meth_runmed43 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=43),
+	#meth_runmed45 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=45),
+	#meth_pspec = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec, fs=5),
+	#meth_pspec_runmed = apply_freq_meth(chunk=list_of_mins, freq_fun_pspec_runmed, fs=5, k=43)
 
 
+##################
 # length of signal
 n <- 10000
  

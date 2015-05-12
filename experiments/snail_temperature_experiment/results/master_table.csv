@@ -1,12 +1,12 @@
 ID, temp_file, heart_file, th_file, uploaded_Y/N,date_begin_dd/mm/yy, date_end_dd/mm/yy, box_N, mass_g, size_cm, notes
 009, temp_009_010.csv, heart_009.csv, th_009_010.csv, Y/Y/N, 07/05/15, 08/05/15, S5, 14.190g, 4.2cm, -
 010, temp_009_010.csv, heart_010.csv, th_009_010.csv, Y/Y/N, 07/05/15, 08/05/15, S5, 15.188g, 4.5cm, -
-011, temp_011_012.csv, heart_011.csv, th_011_012.csv, , dd/mm/15, dd/mm/15, S5, 14.177g, 4.2cm, -
-012, temp_011_012.csv, heart_012.csv, th_011_012.csv, , dd/mm/15, dd/mm/15, S5, 10.181g, 4.0cm, weighed_when_non_dormant
-013, temp_013_014.csv, heart_013.csv, th_013_014.csv, , dd/mm/15, dd/mm/15, S6, 10.870g, 4.0cm, -
-014, temp_013_014.csv, heart_014.csv, th_013_014.csv, , dd/mm/15, dd/mm/15, S6, 12.427g, 4.1cm, -
-015, temp_015_016.csv, heart_015.csv, th_015_016.csv, , dd/mm/15, dd/mm/15, S6, 12.652g, 4.1cm, -
-016, temp_015_016.csv, heart_016.csv, th_015_016.csv, , dd/mm/15, dd/mm/15, S, g, cm, -
+011, temp_011_012.csv, heart_011.csv, th_011_012.csv, Y/Y/N, 08/05/15, 09/05/15, S5, 14.177g, 4.2cm, -
+012, temp_011_012.csv, heart_012.csv, th_011_012.csv, Y/Y/N, 08/05/15, 09/05/15, S5, 10.181g, 4.0cm, weighed_when_non_dormant
+013, temp_013_014.csv, heart_013.csv, th_013_014.csv, , 11/05/15, 12/05/15, S6, 10.870g, 4.0cm, -
+014, temp_013_014.csv, heart_014.csv, th_013_014.csv, , 11/05/15, 12/05/15, S6, 12.427g, 4.1cm, -
+015, temp_015_016.csv, heart_015.csv, th_015_016.csv, , 12/05/15, 13/05/15, S6, 12.652g, 4.1cm, -
+016, temp_015_016.csv, heart_016.csv, th_015_016.csv, , 12/05/15, 13/05/15, S, g, cm, -
 017, temp_017_018.csv, heart_017.csv, th_017_018.csv, , dd/mm/15, dd/mm/15, S, g, cm, -
 018, temp_017_018.csv, heart_018.csv, th_017_018.csv, , dd/mm/15, dd/mm/15, S, g, cm, -
 019, temp_019_020.csv, heart_019.csv, th_019_020.csv, , dd/mm/15, dd/mm/15, S, g, cm, -

@@ -5,10 +5,10 @@ ID, temp_file, heart_file, th_file, uploaded_Y/N,date_begin_dd/mm/yy, date_end_d
 012, temp_011_012.csv, heart_012.csv, th_011_012.csv, Y/Y/N, 08/05/15, 09/05/15, S5, 10.181g, 4.0cm, weighed_when_(w.w.)_non_dormant
 013, temp_013_014.csv, heart_013.csv, th_013_014.csv, Y/Y/N, 11/05/15, 12/05/15, S6, 10.870g, 4.0cm, -
 014, temp_013_014.csv, heart_014.csv, th_013_014.csv, Y/Y/N, 11/05/15, 12/05/15, S6, 12.427g, 4.1cm, -
-015, temp_015_016.csv, heart_015.csv, th_015_016.csv, , 12/05/15, 13/05/15, S6, 12.652g, 4.1cm, -
-016, temp_015_016.csv, heart_016.csv, th_015_016.csv, , 12/05/15, 13/05/15, S7, 11.432g, 3.9cm, -
-017, temp_017_018.csv, heart_017.csv, th_017_018.csv, , dd/mm/15, dd/mm/15, S7, 10.632g, 4.0cm, protective_bubble_w.w.
-018, temp_017_018.csv, heart_018.csv, th_017_018.csv, , dd/mm/15, dd/mm/15, S8, 11.474g, 4.1cm, -
+015, temp_015_016.csv, heart_015.csv, th_015_016.csv, Y/Y/N, 12/05/15, 13/05/15, S6, 12.652g, 4.1cm, -
+016, temp_015_016.csv, heart_016.csv, th_015_016.csv, Y/Y/N, 12/05/15, 13/05/15, S7, 11.432g, 3.9cm, -
+017, temp_017_018.csv, heart_017.csv, th_017_018.csv, recording, 13/05/15, 14/05/15, S7, 10.632g, 4.0cm, protective_bubble_w.w.
+018, temp_017_018.csv, heart_018.csv, th_017_018.csv, recording, 13/05/15, 14/05/15, S8, 11.474g, 4.1cm, -
 019, temp_019_020.csv, heart_019.csv, th_019_020.csv, , dd/mm/15, dd/mm/15, S8, 11.523g, 4.1cm, foam_w.w.
 020, temp_019_020.csv, heart_020.csv, th_019_020.csv, , dd/mm/15, dd/mm/15, S8, 13.331g, 4.4cm, -
 021, temp_021_022.csv, heart_021.csv, th_021_022.csv, , dd/mm/15, dd/mm/15, S8, 12.325g, 4.1cm, -

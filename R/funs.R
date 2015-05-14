@@ -1,3 +1,14 @@
+#interpolation
+interp_fun <- function(y, fs, ...){
+
+	out_t <- seq(from=floor(min(y$V1)), to=round(max(y$V1)), by= 1/fs)
+	df_v1 <- approx(x=y$V1, y=y$V2, xout=out_t, method='linear')
+	df_v2 <- data.frame(df_v1)
+	colnames(df_v2) <- c("t", "y")
+	fin_df <- na.omit(df_v2)
+
+	return(as.data.frame(fin_df))
+}
 
 my_freq_fun <- function(y, fs){
 	sp <- seewave::spec(y,f=fs)
@@ -18,8 +29,8 @@ my_freq_fun_runmed <- function(y, fs,k){
 #k=43 seems to work best
 
 freq_fun_pwelch <- function(y, window, fs, ...){
-	pw <- pwelch(y, window, noverlap=50, fs)
-	f <- seewave::fpeaks(pw$spec, f=5,nmax=1)
+	pw <- pwelch(y, window, noverlap=20, fs=fs)
+	f <- seewave::fpeaks(pw$spec, f=fs,nmax=1)
 	
 	return(f[1,1]*1000)
 }
@@ -70,5 +81,11 @@ freq_fun_pspec_bwfilter <- function(y, fs, dev=TRUE,...){
 apply_freq_meth <- function(chunks, FUN, fs, ...){
 	sapply(chunks, function(d, fs, ... ){ 
 		FUN(d$y, fs, ...)
+	},fs,...)
+}
+
+apply_meth <- function(chunks, FUN, fs, ...){
+	sapply(chunks, function(d, fs, ... ){ 
+		FUN(y, fs, ...)
 	},fs,...)
 }

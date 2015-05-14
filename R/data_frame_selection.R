@@ -3,10 +3,11 @@ library(seewave)
 library(psd)
 library(mFilter)
 library(ggplot2)
+library(data.table)
 source("~/Documents/snail_back_pack/R/funs.R")
 DATA_FILE <- "/home/alysia/Documents/snail_back_pack/R/ref_data_heart_snail.txt"
 REF_FILE <- "/home/alysia/Documents/ref.csv"
-SAMPLING_FREQUENCY <- 5 # in Hz
+SAMPLING_FREQ <- 5 # in Hz
 
 
 
@@ -60,12 +61,10 @@ dev.off()
 
 #list of results from methods and ggplot generation
 results <- list(
-	
-	#meth_pspec_bwfilter = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec_bwfilter, fs=5)
-	meth_pwelch = apply_freq_meth(chunk=list_of_mins, freq_fun_pwelch, window=6, fs=5)
-	#meth_pspec = apply_freq_meth(chunk=list_of_mins, freq_fun_pspec, fs=5),
-	#meth_pwelch_runmed = apply_freq_meth(chunk=list_of_mins, freq_fun_pwelch_runmed, fs=5, k=43)
-	#meth_pwelch_bwfilter = apply_freq_meth(chunk=list_of_mins, freq_fun_pwelch_bwfilter, fs=5)
+
+	meth_pspec = apply_freq_meth(chunk=list_of_mins, freq_fun_pspec, fs=5),
+	meth_pspec_bwfilter = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec_bwfilter, fs=5),
+	meth_pspec_runmed = apply_freq_meth(chunk=list_of_mins, freq_fun_pspec_runmed, fs=5, k=43)
 	)
 	
 
@@ -77,17 +76,17 @@ tmp_df <- data.frame(
 	fc=do.call('c',results),
 	min=ref_df$min
 	)
-	
-	
+
+
 long_df <- merge(ref_df, tmp_df)
-	
+
 
 ymax <- max(c(long_df$fc,long_df$reof))
 xmax <- ymax
-	
 
-	
-plt <- ggplot(long_df,aes(y = fc, x =reof,colour=method,shape=method)) +
+
+
+pltpspec <- ggplot(long_df,aes(y = fc, x =reof,colour=method,shape=method)) +
 	geom_point() + geom_smooth(method="lm", fill=NA) + 
 	coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +
 	geom_abline(group=1, colour="grey")
@@ -118,7 +117,7 @@ lm_mat <- sapply(df_meth_list, function(d){
 	names(out) <- c("b", "a", "rsqr")
 	return(out)
 	})
-	
+
 #################
 testx <- fft(test$y, inverse=FALSE)
 test_sp1 <- spectrum(testx, method=c("pgram"))
@@ -143,8 +142,11 @@ plot(high_comp ~ t,test, type='l')
 	#meth_runmed43 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=43),
 	#meth_runmed45 = apply_freq_meth(chunks=list_of_mins, my_freq_fun_runmed, fs=5, k=45),
 	#meth_pspec = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec, fs=5),
-	#meth_pspec_runmed = apply_freq_meth(chunk=list_of_mins, freq_fun_pspec_runmed, fs=5, k=43)
 
+	#pwelch
+	#meth_pwelch = apply_freq_meth(chunk=list_of_mins, freq_fun_pwelch, window=6, fs=5),
+	#meth_pwelch_runmed = apply_freq_meth(chunk=list_of_mins, freq_fun_pwelch_runmed, window=6, fs=5, k=43),
+	#meth_pwelch_bwfilter = apply_freq_meth(chunk=list_of_mins, freq_fun_pwelch_bwfilter, window=6, fs=5)
 
 ##################
 # length of signal
@@ -153,12 +155,12 @@ n <- 10000
 # the frequency to be kept
 F <- 500
 F0 <- 2 * F / n
- 
+
 # input signal
 sig <- add_sin_sig(n, c(300,500,700,1100))
- 
+
 # filter specification
 filter <- cheby1(6,2,c(F0-F0*.1,F0+F0*.1),type="pass")
- 
+
 # filtered signal
 sig2 <- signal::filter(filter, x=sig)

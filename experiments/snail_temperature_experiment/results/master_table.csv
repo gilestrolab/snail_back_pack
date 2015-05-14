@@ -19,7 +19,7 @@ experiment_trials, , , , , , , , ,
 ID, file, , uploaded_Y/N,date_begin_dd/mm/yy, date_end_dd/mm/yy, mass_g, size_cm, box_N, notes
 001, temp_001.csv,, Y,27/03/15, 29/03/15, 12.18, 3.3,S12, -
 002, temp_002.csv,, Y,28/03/15, 29/03/15, , , S12, -
-003, temp_003.csv,, Y,29/03/15, 30/03/15, , , -
+003, temp_003.csv,, Y,29/03/15, 30/03/15, , , S12, -
 004, temp_004.csv,, Y,30/03/15, 31/03/15, , , S12, -
 005, temp_005.csv,, Y,31/03/15, 01/04/15, , , S12, -
 006, temp_006.csv,, Y,28/04/15, 29/04/15, 10.760g, 3.8cm, S9, -

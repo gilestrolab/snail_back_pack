@@ -14,8 +14,7 @@ ID, temp_file, heart_file, uploaded_Y/N,date_begin_dd/mm/yy, date_end_dd/mm/yy, 
 020, temp_019_020.csv, heart_020.csv,  recording, 14/05/15, 15/05/15, S8, 13.331g, 4.4cm, -
 021, temp_021_022.csv, heart_021.csv,  , dd/mm/15, dd/mm/15, S8, 12.325g, 4.1cm, -
 022, temp_021_022.csv, heart_022.csv,  , dd/mm/15, dd/mm/15, S7, 11.401g, 4.0cm, -
-023, temp_023_024.csv, heart_023.csv,  , dd/mm/15, dd/mm/15, S, g, cm, -
-024, temp_023_024.csv, heart_024.csv,  , dd/mm/15, dd/mm/15, S, g, cm, -
+
 , , , , , , , , , 
 experiment_trials, , , , , , , , , 
 ID, file, , uploaded_Y/N,date_begin_dd/mm/yy, date_end_dd/mm/yy, box_N, mass_g, size_cm, notes

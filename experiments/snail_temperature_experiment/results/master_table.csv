@@ -10,8 +10,8 @@ ID, temp_file, heart_file, uploaded_Y/N,date_begin_dd/mm/yy, date_end_dd/mm/yy, 
 016, temp_015_016.csv, heart_016.csv, Y/Y, 12/05/15, 13/05/15, 11.432g, 3.9cm,S7, -
 017, temp_017_018.csv, heart_017.csv, Y/Y, 13/05/15, 14/05/15, 10.632g, 4.0cm,S7, protective_bubble_w.w.
 018, temp_017_018.csv, heart_018.csv, Y/Y, 13/05/15, 14/05/15, 11.474g, 4.1cm,S8, -
-019, temp_019_020.csv, heart_019.csv,  recording, 14/05/15, 15/05/15, 11.523g,S8, 4.1cm, foam_w.w.
-020, temp_019_020.csv, heart_020.csv,  recording, 14/05/15, 15/05/15, 13.331g,S8, 4.4cm, -
+019, temp_019_020.csv, heart_019.csv,  recording, 14/05/15, 15/05/15, 11.523g, 4.1cm, S8, foam_w.w.
+020, temp_019_020.csv, heart_020.csv,  recording, 14/05/15, 15/05/15, 13.331g, 4.4cm, S8, -
 021, temp_021_022.csv, heart_021.csv,  , dd/mm/15, dd/mm/15, 12.325g, 4.1cm,S8, -
 022, temp_021_022.csv, heart_022.csv,  , dd/mm/15, dd/mm/15, 11.401g, 4.0cm,S7, -
 , , , , , , , , , 

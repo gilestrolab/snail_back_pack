@@ -4,7 +4,7 @@ interp_fun <- function(y, fs, ...){
 	out_t <- seq(from=floor(min(y$V1)), to=round(max(y$V1)), by= 1/fs)
 	df_v1 <- approx(x=y$V1, y=y$V2, xout=out_t, method='linear')
 	df_v2 <- data.frame(df_v1)
-	colnames(df_v2) <- c("t", "y")
+	colnames(df_v2) <- c("t", "V2")
 	fin_df <- na.omit(df_v2)
 
 	return(as.data.frame(fin_df))

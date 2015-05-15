@@ -1,14 +1,6 @@
-
-
-
-
-
-
-
-pre_temp_1112 <- fread("~/Documents/temp_011_012.csv", sep=",", header=F, data.table=F)
-
-li_11 <- fread("~/Documents/heart_011.csv", sep=",", header=F, data.table=F)
-
+rm(list=ls())
+RESULT_DIR <-"~/Documents"
+MASTER_FILE <- "~/Documents/snail_back_pack/experiments/snail_temperature_experiment/results/master_table.csv"
 
 
 
@@ -22,35 +14,27 @@ li_11 <- fread("~/Documents/heart_011.csv", sep=",", header=F, data.table=F)
 
 
 
+makedt_for_animal <- function(subdt){
 
-master_table_v1 <- data.table(read.csv("~/Documents/snail_back_pack/experiments/snail_temperature_experiment/results/master_table.csv", header=T, na.strings=" ", skip=1))
-master_table_v2 <- na.omit(master_table_v1[1:16])
-
-
-heart_table <- sapply(master_table_v2$heart_file, fread("~/Documents/", sep=",", header=F, data.table=F))
-heart_table <- sapply(master_table_v2$heart_file, function(s){
-	fread("~/Documents/"s, sep=",", header=F, data.table=F)
-})
-
-DF1 <- NULL
-for(file in filecol){
+	heart_dt <- fread(subdt$heart_file)
+	temp_dt <- fread(subdt$temp_file)
+	##interpolation goes here
 	
-	newfile <- gsub("\\s", "", file)
-	files <- read.csv(newfile, sep=",", header=F)
-	DF1 <- rbind(DF1, files)
-}
-
-filecol <- data.table(gsub("\\s", "", master_table_v2$heart_file))
+	heart_dt
+	
+	}
 
 
-heart_table <- sapply(filecol, read.csv)
+master_table_v1 <- data.table(read.csv(MASTER_FILE, header=T, na.strings=" ", skip=1))
+master_table_v2 <- na.omit(master_table_v1[1:16])
+master_table_v2[, ID:= as.integer(as.character(ID))]
 
+master_table_v2[, heart_file:= paste(RESULT_DIR,gsub("\\s", "", heart_file),sep="/")]
+master_table_v2[, temp_file:= paste(RESULT_DIR,gsub("\\s", "", temp_file),sep="/")]
+#FIXME
+master_table_v2 <- master_table_v2[ID<13, ]
+setkey(master_table_v2,ID)
 
-files <- list.files(pattern="heart")
+test <- master_table_v2[,makedt_for_animal(.SD),by=ID]
 
-DF2 <- NULL
-for (f in files) {
-   heart_data <- read.csv(f, header=F, sep=",")
-   DF2 <- rbind(DF2, data.frame(heart_data))
-}
-
+master_table_v2[test]

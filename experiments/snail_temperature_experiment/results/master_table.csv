@@ -10,10 +10,10 @@ ID, temp_file, heart_file, uploaded_Y/N,date_begin_dd/mm/yy, date_end_dd/mm/yy, 
 016, temp_015_016.csv, heart_016.csv, Y/Y, 12/05/15, 13/05/15, 11.432, 3.9,S7, -
 017, temp_017_018.csv, heart_017.csv, Y/Y, 13/05/15, 14/05/15, 10.632, 4.0,S7, protective_bubble_w.w.
 018, temp_017_018.csv, heart_018.csv, Y/Y, 13/05/15, 14/05/15, 11.474, 4.1,S8, -
-019, temp_019_020.csv, heart_019.csv,  recording, 14/05/15, 15/05/15, 11.523, 4.1, S8, foam_w.w.
-020, temp_019_020.csv, heart_020.csv,  recording, 14/05/15, 15/05/15, 13.331, 4.4, S8, -
-021, temp_021_022.csv, heart_021.csv,  , dd/mm/15, dd/mm/15, 12.325, 4.1,S8, -
-022, temp_021_022.csv, heart_022.csv,  , dd/mm/15, dd/mm/15, 11.401, 4.0,S7, -
+019, temp_019_020.csv, heart_019.csv, Y/Y, 14/05/15, 15/05/15, 11.523, 4.1, S8, foam_w.w.
+020, temp_019_020.csv, heart_020.csv, Y/Y, 14/05/15, 15/05/15, 13.331, 4.4, S8, -
+021, temp_021_022.csv, heart_021.csv, recording, dd/mm/15, dd/mm/15, 12.325, 4.1,S8, -
+022, temp_021_022.csv, heart_022.csv, recording, dd/mm/15, dd/mm/15, 11.401, 4.0,S7, -
 , , , , , , , , , 
 experiment_trials, , , , , , , , , 
 ID, file, , uploaded_Y/N,date_begin_dd/mm/yy, date_end_dd/mm/yy, mass_g, size_cm, box_N, notes

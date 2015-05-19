@@ -24,17 +24,6 @@ makedt_for_animal <- function(subdt, fs=5){
 		}
 
 
-makedt_for_animal_interp <- function(subdt){
-
-	heart_dt <- fread(subdt$heart_file)
-	temp_dt <- fread(subdt$temp_file)
-
-	interp_heart <- interp_fun(heart_dt, fs=5)
-	interp_temp <- interp_fun(temp_dt, fs=5)
-	li <- merge(interp_temp, interp_heart, by="t")
-	return(li)
-	}
-
 
 master_table_v1 <- data.table(read.csv(MASTER_FILE, header=T, na.strings=" ", skip=1))
 master_table_v2 <- na.omit(master_table_v1[1:16])
@@ -45,31 +34,31 @@ master_table_v2[, temp_file:= paste(RESULT_DIR,gsub("\\s", "", temp_file),sep="/
 #FIXME
 master_table_v2 <- master_table_v2[ID<13, ]
 setkey(master_table_v2,ID)
-tmin <- floor(test$t /60) + 1
 
+#TO LOOK AT
+main_dt <- master_table_v2[,makedt_for_animal(.SD),by="ID"]
+tmin <- floor(main_dt$t /60) + 1
+main_dt2 <-cbind(main_dt, data.table(tmin))
+main_dt3 <- split(main_dt2, list(main_dt2$ID, main_dt2$tmin))
 
-test <- master_table_v2[,makedt_for_animal(.SD),by="ID"]
-test <- master_table_v2[,makedt_for_animal(.SD),by="tmin"]
+main_dt4 <- lapply(main_dt3, function(m){
+	
+	mean_temp <- mean(m$temp)
+	sd_temp <- sd(m$temp)
+	sd_mean <- cbind(mean_temp, sd_temp)
+	main_temp <- cbind(m, sd_mean)
+	main_temp
+	
+})
 
+#testing
 
-li <- list(test1, test2, test3)
-test <- rbindlist(li, fill=T)
+test_m <- mean(test$temp)
+test_sd <- sd(test$temp)
+ntest <- cbind(test, rep(test_m), rep(test_sd))
 
-master_table_v2[test]
+#TOFIX: some of the main_dt3 subtables don't have 300 values, remove?
 
-tm_v2 <- as.data.frame(as.numeric(tm))
-
-tm_v3 <- data.frame(matrix(unlist(tm_v2)),stringsAsFactors=FALSE)
-tm_v4 <- do.call("rbind", lapply(tm_v2, data.frame))
-
-
-
-
-test2 <-cbind(test, data.table(tmin), fill=T)
-
-
-
-#test_li <- lapply(test, mean)
 
 
 

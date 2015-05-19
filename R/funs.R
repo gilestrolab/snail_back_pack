@@ -1,4 +1,4 @@
-#interpolation
+#interpolation FIXME
 interp_fun <- function(y, fs, ...){
 
 	out_t <- seq(from=floor(min(y$V1)), to=round(max(y$V1)), by= 1/fs)

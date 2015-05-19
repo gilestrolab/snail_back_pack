@@ -1,4 +1,5 @@
 rm(list=ls())
+library(data.table)
 RESULT_DIR <-"~/Documents"
 MASTER_FILE <- "~/Documents/snail_back_pack/experiments/snail_temperature_experiment/results/master_table.csv"
 
@@ -44,10 +45,11 @@ master_table_v2[, temp_file:= paste(RESULT_DIR,gsub("\\s", "", temp_file),sep="/
 #FIXME
 master_table_v2 <- master_table_v2[ID<13, ]
 setkey(master_table_v2,ID)
+tmin <- floor(test$t /60) + 1
 
 
-test <- master_table_v2[,makedt_for_animal(.SD),by=ID]
-test <- master_table_v2[,makedt_for_animal(.SD),by=c("ID","t_m")]
+test <- master_table_v2[,makedt_for_animal(.SD),by="ID"]
+test <- master_table_v2[,makedt_for_animal(.SD),by="tmin"]
 
 
 li <- list(test1, test2, test3)
@@ -55,9 +57,25 @@ test <- rbindlist(li, fill=T)
 
 master_table_v2[test]
 
+tm_v2 <- as.data.frame(as.numeric(tm))
+
+tm_v3 <- data.frame(matrix(unlist(tm_v2)),stringsAsFactors=FALSE)
+tm_v4 <- do.call("rbind", lapply(tm_v2, data.frame))
+
+
+
+
+test2 <-cbind(test, data.table(tmin), fill=T)
+
+
+
+#test_li <- lapply(test, mean)
 
 
 
 
 
-#Notes: combine function makedt fun into one, arguments into list/table/etc.  
+
+
+
+

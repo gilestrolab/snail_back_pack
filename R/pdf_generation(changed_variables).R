@@ -1,6 +1,6 @@
 
 
-DATA_FILE <- "heart_011.csv"  #####change file name here
+DATA_FILE <- source("~/Documents/snail_back_pack/R/FILE")  #####change file name here
 SAMPLING_FREQUENCY <- 5 # in Hz
 
 

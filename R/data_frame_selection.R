@@ -20,7 +20,7 @@ colnames(heterogeneous_df) <- c("t", "y")
 
 
 # interpolation, generates df
-out_t <- seq(from=0, to=max(heterogeneous_df$t), by= 1/SAMPLING_FREQUENCY)
+out_t <- seq(from=0, to=max(heterogeneous_df$t), by= 1/SAMPLING_FREQ)
 df_v1 <- approx(x=heterogeneous_df$t, y=heterogeneous_df$y, xout=out_t, method='linear')
 df_v2 <- data.frame(df_v1)
 colnames(df_v2) <- c("t", "y")

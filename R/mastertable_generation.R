@@ -15,7 +15,7 @@ makedt_for_animal <- function(subdt, fs=5){
 	li_heart <- approx(x=heart_dt$V1, y=heart_dt$V2, xout=out_t, method='linear')
 	li_temp <- approx(x=temp_dt$V1, y=temp_dt$V2, xout=out_t, method='linear')
 	#map here
-	out_dt <- data.table(t=li_heart$x, l=li_heart$y, temp=li_temp$y)
+	out_dt <- data.table(t=li_heart$x, y=li_heart$y, temp=li_temp$y)
 	fin_dt <- na.omit(out_dt)
 
 
@@ -32,7 +32,7 @@ master_table_v2[, ID:= as.integer(as.character(ID))]
 master_table_v2[, heart_file:= paste(RESULT_DIR,gsub("\\s", "", heart_file),sep="/")]
 master_table_v2[, temp_file:= paste(RESULT_DIR,gsub("\\s", "", temp_file),sep="/")]
 #FIXME
-master_table_v2 <- master_table_v2[ID<13, ]
+master_table_v2 <- master_table_v2[ID<23, ]
 setkey(master_table_v2,ID)
 
 #TO LOOK AT
@@ -51,7 +51,15 @@ main_dt4 <- lapply(main_dt3, function(m){
 	
 })
 
+
+resu <- main_dt2[ID== 22,list(
+			freq = freq_fun_pspec_bwfilter(y,fs=5),
+			temp = mean(temp))
+			
+			,by=c("ID","tmin")]
 #testing
+
+
 
 test_m <- mean(test$temp)
 test_sd <- sd(test$temp)
@@ -60,10 +68,20 @@ ntest <- cbind(test, rep(test_m), rep(test_sd))
 #TOFIX: some of the main_dt3 subtables don't have 300 values, remove?
 
 
+meth_pspec_bwfilter = apply_freq_meth(chunks=main_dt3, 
+freq_fun_pspec_bwfilter, fs=5) 
 
 
 
-
+plot(freq ~ temp,resu)
+> plot(freq ~ tmin,resu)
+> plot(temp ~ tmin,resu)
+> plot(temp ~ log10(tmin),resu)
+> plot(temp ~ tmin,resu)
+> plot(temp ~ tmin,resu[tmin>23850600])
+tempplt<- plot(temp ~ tmin,resu[tmin>23862200],type='l')
+freqplt<- plot(freq ~ tmin,resu[tmin>23862200], type='l')
+tfplt<- plot(freq ~ temp,resu[temp>20])
 
 
 

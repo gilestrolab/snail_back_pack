@@ -67,14 +67,19 @@ freq_fun_bwfilter <- function(y, fs, dev=TRUE,...){
 freq_fun_pspec_bwfilter <- function(y, fs, dev=TRUE,...){
 	bwf <- bwfilter(y,freq=4,drift=TRUE)
 	pspec_test <- pspectrum(bwf$trend, x.frqsamp=fs)
-	
+	f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1, plot=T, title=F)
+	if(any(is.na(f))){
+		return(.0 + NA)
+		}
+		
 	if(dev == T){
 		plot(y,type="l",...)
 		plot(pspec_test,...)
-		f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1, plot=T, title=F)
 		title(round((f[1,1]*1000), digits=3), "Hz")
 		abline(v=(f[1,1]), col="red")
 	}
+	
+	
 	return(f[1,1]*1000)
 }
 

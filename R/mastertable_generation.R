@@ -1,5 +1,6 @@
 rm(list=ls())
 library(data.table)
+source("~/Documents/snail_back_pack/R/funs.R")
 RESULT_DIR <-"~/Documents"
 MASTER_FILE <- "~/Documents/snail_back_pack/experiments/snail_temperature_experiment/results/master_table.csv"
 
@@ -51,14 +52,36 @@ main_dt4 <- lapply(main_dt3, function(m){
 	
 })
 
-
-resu <- main_dt2[ID== 22,list(
+#TODO: lapply or something like
+result21 <- main_dt2[ID== 21,list(
 			freq = freq_fun_pspec_bwfilter(y,fs=5),
-			temp = mean(temp))
+			temp = mean(temp),
+			temp_sd = sd(temp))
 			
 			,by=c("ID","tmin")]
+			
+result21_runmed <- main_dt2[ID== 21,list(
+			freq = freq_fun_pspec_runmed(y,fs=5, 43),
+			temp = mean(temp),
+			temp_sd = sd(temp))
+			
+			,by=c("ID","tmin")]
+
+result21_runmed_bwfilter <- main_dt2[ID== 21,list(
+			freq = freq_fun_pspec_bwfilter_runmed(y,fs=5, 43),
+			temp = mean(temp),
+			temp_sd = sd(temp))
+			
+			,by=c("ID","tmin")]
+
 #testing
 
+results_dt <- rbind(result9, result10, result11, result12, result13, result14, 
+result15, result16, result17, result18, result19, result20, result21, result22)
+
+results_half <- rbind(result11, result13, result15, result17, result19, result21)
+
+results_9_14 <- rbind(result9, result10, result11, result12, result13, result14)
 
 
 test_m <- mean(test$temp)

@@ -1,6 +1,6 @@
 
 
-DATA_FILE <- source("~/Documents/snail_back_pack/R/FILE")  #####change file name here
+DATA_FILE <- "~/Documents/heart_021.csv"  #####change file name here
 SAMPLING_FREQUENCY <- 5 # in Hz
 
 
@@ -16,7 +16,7 @@ df <- na.omit(df_v2)
 ######pdf generation
 df$min <- round(df$t /60)
 ldf <- split(df, df$min)
-pdf("visualtest.pdf",w=16,h=9)  #####change pdf name here
+pdf("heartsignal_21.pdf",w=16,h=9)  #####change pdf name here
 par(mfrow=c(2,1))
 for(d in ldf){
 h <- round(d$t[1] / 3600,3)

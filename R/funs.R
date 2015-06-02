@@ -46,9 +46,11 @@ freq_fun_pspec_runmed <- function(y, fs, k){
 	rmed <- runmed(y, k)
 	ny <- y-rmed
 	attr(ny,"k") <- NULL
-	pspec_test <- pspectrum(y, x.frqsamp=fs)
+	pspec_test <- pspectrum(ny, x.frqsamp=fs)
 	f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1)
-	
+	if(any(is.na(f))){
+		return(.0 + NA)
+		}
 	return(f[1,1]*1000)
 }
 
@@ -65,7 +67,7 @@ freq_fun_bwfilter <- function(y, fs, dev=TRUE,...){
 
 #generates, original spectra, power spectrum, and fpeaks
 freq_fun_pspec_bwfilter <- function(y, fs, dev=TRUE,...){
-	bwf <- bwfilter(y,freq=4,drift=TRUE)
+	bwf <- bwfilter(y,freq=3,drift=TRUE)
 	pspec_test <- pspectrum(bwf$trend, x.frqsamp=fs)
 	f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1, plot=T, title=F)
 	if(any(is.na(f))){
@@ -79,6 +81,20 @@ freq_fun_pspec_bwfilter <- function(y, fs, dev=TRUE,...){
 		abline(v=(f[1,1]), col="red")
 	}
 	
+	
+	return(f[1,1]*1000)
+}
+
+freq_fun_pspec_bwfilter_runmed <- function(y, fs, k, dev=TRUE,...){
+	rmed <- runmed(y, k)
+	ny <- y-rmed
+	attr(ny,"k") <- NULL
+	bwf <- bwfilter(ny,freq=3,drift=TRUE)
+	pspec_test <- pspectrum(bwf$trend, x.frqsamp=fs)
+	f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1, plot=T, title=F)
+	if(any(is.na(f))){
+		return(.0 + NA)
+		}
 	
 	return(f[1,1]*1000)
 }

@@ -74,6 +74,13 @@ result21_runmed_bwfilter <- main_dt2[ID== 21,list(
 			
 			,by=c("ID","tmin")]
 
+result21_bwfilter78 <- main_dt2[ID== 21,list(
+			freq = freq_fun_pspec_bwfilter(y,fs=5),
+			temp = mean(temp),
+			temp_sd = sd(temp))
+			
+			,by=c("ID","tmin")]
+
 #testing
 
 results_dt <- rbind(result9, result10, result11, result12, result13, result14, 

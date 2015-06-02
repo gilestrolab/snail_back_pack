@@ -42,9 +42,9 @@ dev.off()
 
 
 pdf("/tmp/proto_plot.pdf",w=16,h=9)
-lapply(list_of_mins, function(l){
-	y <- l$y
-	t0 <- l$t[1]
+sapply(result21, function(l){
+	y <- l["freq"]
+	t0 <- l["tmin"][1]
 	title <- paste("pspec_bwfilter;", t0)
 	freq_fun_pspec_bwfilter(y, fs=5, dev=T, main=title)
 	})

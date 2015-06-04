@@ -56,7 +56,7 @@ freq_fun_pspec_runmed <- function(y, fs, k){
 
 #generates original spectra and filtered spectra
 freq_fun_bwfilter <- function(y, fs, dev=TRUE,...){
-	bwf <- bwfilter(y,freq=4,drift=TRUE)
+	bwf <- bwfilter(y,freq=3,drift=TRUE)
 	
 	if(dev == T){
 		plot(y,type="l",...)
@@ -67,7 +67,7 @@ freq_fun_bwfilter <- function(y, fs, dev=TRUE,...){
 
 #generates, original spectra, power spectrum, and fpeaks
 freq_fun_pspec_bwfilter <- function(y, fs, dev=TRUE,...){
-	bwf <- bwfilter(y,freq=78,drift=TRUE)
+	bwf <- bwfilter(y,freq=3,drift=TRUE)
 	pspec_test <- pspectrum(bwf$trend, x.frqsamp=fs)
 	f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1, plot=T, title=F)
 	if(any(is.na(f))){
@@ -99,6 +99,27 @@ freq_fun_pspec_bwfilter_runmed <- function(y, fs, k, dev=TRUE,...){
 	
 	return(f[1,1]*1000)
 }
+
+#freq_fun_pspec_iirfilter_pspec<- function(y, fs, k, dev=TRUE,...){
+
+	#pspec_test <- pspectrum(bwf$trend, x.frqsamp=fs)
+	#f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1, plot=T, title=F)
+	#if(any(is.na(f))){
+	#	return(.0 + NA)
+	#	}
+	
+	#return(f[1,1]*1000)
+#}
+
+
+
+#f1 <- iir(sines, fl = 0.5, fh = 1.5, type = "BP", proto = "BU")
+#lines(f1, col = "blue")
+
+
+
+
+
 
 apply_freq_meth <- function(chunks, FUN, fs, ...){
 	sapply(chunks, function(d, fs, ... ){ 

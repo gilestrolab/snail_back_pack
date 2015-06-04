@@ -4,12 +4,15 @@ library(psd)
 library(mFilter)
 library(ggplot2)
 library(data.table)
+library(plotly)
 source("~/Documents/snail_back_pack/R/funs.R")
 DATA_FILE <- "/home/alysia/Documents/snail_back_pack/R/ref_data_heart_snail.txt"
 REF_FILE <- "/home/alysia/Documents/ref.csv"
+
 SAMPLING_FREQ <- 5 # in Hz
 
-
+DATA_FILE <- "/home/alysia/Documents/heart_021.csv"
+REF_FILE <- "/home/alysia/Documents/snail_back_pack/experiments/snail_minute_slices/snail_21minute.csv"
 
 
 
@@ -41,16 +44,6 @@ lapply(list_of_mins, function(l){
 dev.off()
 
 
-pdf("/tmp/proto_plot.pdf",w=16,h=9)
-sapply(result21, function(l){
-	y <- l["freq"]
-	t0 <- l["tmin"][1]
-	title <- paste("pspec_bwfilter;", t0)
-	freq_fun_pspec_bwfilter(y, fs=5, dev=T, main=title)
-	})
-dev.off()
-
-
 pdf("plot.pdf",w=16,h=9)
 lapply(list_of_mins, function(sdf){
 		title <- sdf$min[1]
@@ -62,9 +55,9 @@ dev.off()
 #list of results from methods and ggplot generation
 results <- list(
 
-	meth_pspec = apply_freq_meth(chunk=list_of_mins, freq_fun_pspec, fs=5),
-	meth_pspec_bwfilter = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec_bwfilter, fs=5),
-	meth_pspec_runmed = apply_freq_meth(chunk=list_of_mins, freq_fun_pspec_runmed, fs=5, k=43)
+	#pspec = apply_freq_meth(chunk=list_of_mins, freq_fun_pspec, fs=5)
+	pspec_bwfilter = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec_bwfilter, fs=5),
+	pspec_runmed = apply_freq_meth(chunk=list_of_mins, freq_fun_pspec_runmed, fs=5, k=43)
 	)
 	
 

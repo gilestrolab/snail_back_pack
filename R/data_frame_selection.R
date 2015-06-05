@@ -78,7 +78,7 @@ ymax <- max(c(long_df$fc,long_df$reof))
 xmax <- ymax
 
 
-
+			
 pltpspec <- ggplot(long_df,aes(y = fc, x =reof,colour=method,shape=method)) +
 	geom_point() + geom_smooth(method="lm", fill=NA) + 
 	coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +

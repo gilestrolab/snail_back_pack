@@ -67,7 +67,8 @@ freq_fun_bwfilter <- function(y, fs, dev=TRUE,...){
 
 #generates, original spectra, power spectrum, and fpeaks
 freq_fun_pspec_bwfilter <- function(y, fs, dev=TRUE,...){
-	bwf <- bwfilter(y,freq=3,drift=TRUE)
+	y <- ts(y,f=fs)
+	bwf <- bwfilter(y,freq=0.1,drift=TRUE)
 	pspec_test <- pspectrum(bwf$trend, x.frqsamp=fs)
 	f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1, plot=T, title=F)
 	if(any(is.na(f))){

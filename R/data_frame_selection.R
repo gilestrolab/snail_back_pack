@@ -7,7 +7,7 @@ library(data.table)
 library(plotly)
 source("~/Documents/snail_back_pack/R/funs.R")
 DATA_FILE <- "/home/alysia/Documents/snail_back_pack/R/ref_data_heart_snail.txt"
-REF_FILE <- "/home/alysia/Documents/ref.csv"
+REF_FILE <- "/home/alysia/Documents/nref.csv"
 
 SAMPLING_FREQ <- 5 # in Hz
 
@@ -34,11 +34,11 @@ df$min <- floor(df$t /60) + 1
 mins_of_interest_df <- subset(df, df$min %in% ref_df$min)
 list_of_mins <- split(mins_of_interest_df, mins_of_interest_df$min)
 
-pdf("/tmp/proto_plot.pdf",w=16,h=9)
+pdf("/tmp/bwftrend_plot.pdf",w=16,h=9)
 lapply(list_of_mins, function(l){
 	y <- l$y
 	t0 <- l$t[1]
-	title <- paste("pspec_bwfilter;", t0)
+	title <- paste("Heart rate spectrum in Helix aspersa")
 	freq_fun_pspec_bwfilter(y, fs=5, dev=T, main=title)
 	})
 dev.off()
@@ -56,10 +56,14 @@ dev.off()
 results <- list(
 
 	#pspec = apply_freq_meth(chunk=list_of_mins, freq_fun_pspec, fs=5)
-	pspec_bwfilter = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec_bwfilter, fs=5),
+	pspec_bwfilter3 = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec_bwfilter3, fs=5),
+	pspec_bwfilter5 = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec_bwfilter5, fs=5),
+	pspec_bwfilter8 = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec_bwfilter8, fs=5),
 	pspec_runmed = apply_freq_meth(chunk=list_of_mins, freq_fun_pspec_runmed, fs=5, k=43)
 	)
-	
+
+results <- list(
+pspec_bwfilter = apply_freq_meth(chunks=list_of_mins, freq_fun_pspec_bwfilter, fs=5))
 
 #ref_df <- cbind(ref_df, as.data.frame(results))
 
@@ -74,16 +78,19 @@ tmp_df <- data.frame(
 long_df <- merge(ref_df, tmp_df)
 
 
-ymax <- max(c(long_df$fc,long_df$reof))
+ymax <- max(c(long_df$fc,long_df$of))
 xmax <- ymax
 
-
+pdf("/tmp/pltpspec.pdf",w=16,h=9)
 			
-pltpspec <- ggplot(long_df,aes(y = fc, x =reof,colour=method,shape=method)) +
+pltpspec <- ggplot(long_df,aes(y = fc, x =of,colour=method,shape=method)) +
 	geom_point() + geom_smooth(method="lm", fill=NA) + 
 	coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +
-	geom_abline(group=1, colour="grey")
-
+	geom_abline(group=1, colour="grey") + 
+	labs(x = "Reference frequency",
+       y = "Generated frequency",
+       title = "Calculated reference frequency vs algorithm generated frequency")
+dev.off()
 
 #by quality
 plt <- ggplot(long_df,aes(y = fc, x =of,colour=method,shape=as.factor(q))) +
@@ -120,7 +127,7 @@ test_sp2 <- spectrum(testx, method=c("pgram", "ar"))
 #################
 
 plot(freq1 ~ of, ref_df, pch=as.character(q), col=q)
-mod <- lm(freq1 ~ of, ref_df)
+mod <- lm(freq1 ~ of, ref_df)`
 
 test <- list_of_mins[[1]]
 plot(y ~ t,test, type='l')

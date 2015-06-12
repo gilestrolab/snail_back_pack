@@ -74,8 +74,8 @@ result21_runmed_bwfilter <- main_dt2[ID== 21,list(
 			
 			,by=c("ID","tmin")]
 
-result21_bwfilter78 <- main_dt2[ID== 21,list(
-			freq = freq_fun_pspec_bwfilter(y,fs=5),
+result21_bwfilter5 <- main_dt2[ID== 21,list(
+			freq = freq_fun_pspec_bwfilter5(y,fs=5),
 			temp = mean(temp),
 			temp_sd = sd(temp))
 			
@@ -113,6 +113,88 @@ tempplt<- plot(temp ~ tmin,resu[tmin>23862200],type='l')
 freqplt<- plot(freq ~ tmin,resu[tmin>23862200], type='l')
 tfplt<- plot(freq ~ temp,resu[temp>20])
 
+bwf <- bwfilter(y,freq=10,drift=TRUE);plot(bwf$trend, type="l",col='red',lty=2,lwd=3);lines(y)
+> bwf <- bwfilter(y,freq=10,nfix=2,drift=TRUE);plot(bwf$trend, ylim=c(325,350),type="l",col='red',lty=2,lwd=3);lines(y)
+> bwf <- bwfilter(y,freq=10,nfix=3,drift=TRUE);plot(bwf$trend, type="l",col='red',lty=2,lwd=3);lines(y)
+> bwf <- bwfilter(y,freq=10,nfix=2,drift=TRUE);plot(bwf$trend, type="l",col='red',lty=2,lwd=3);lines(y)
+
+plot(y-bwf$trend)
+> acf(y-bwf$trend,max)
+max      max.col  
+> acf(y-bwf$trend,lag.max=50)
+> acf(y,lag.max=50)
+
+y <- ts(y,f=fs)
+pdf("/tmp/bwftrend_plot.pdf",w=16,h=9)
+bwf <- bwfilter(y,freq=10,nfix=2,drift=TRUE);plot(bwf$trend, ylim=c(325,350), xlab="Time (seconds)"
+, ylab="Light intensity (arbitrary units)", type="l",col='red',lty=2,lwd=3);lines(y)
+title("Original signal with a butterworth filter applied")
+dev.off()
+
+pdf("/tmp/bwf_plot.pdf",w=16,h=9)
+plot(y-bwf$trend, xlab="Time (seconds)", ylab="Light intensity (arbitrary units)")
+title("Original signal with a butterworth filter applied")
+dev.off()
 
 
+rmed <- runmed(y, k=43)
+ny <- y-rmed
+nyb <- y - bwf$trend
+attr(ny,"k") <- NULL
+
+pdf("/tmp/rmed_plot.pdf",w=16,h=9)
+plot(ny, type="l", xlab="Time (seconds)", ylab="Light intensity (arbitrary units)")
+title("Original signal with a running median filter applied")
+dev.off()
+
+pdf("/tmp/rmedtrend_plot.pdf",w=16,h=9)
+plot(rmed, type="l", xlab="Time (seconds)", ylab="Light intensity (arbitrary units)",col='red',lty=2,lwd=3);lines(y)
+title("Original signal with a running median filter applied")
+dev.off()
+
+pdf("/tmp/rmedtrend_plot.pdf",w=16,h=9)
+plot(rmed, type="l", xlab="Time (seconds)", ylab="Light intensity (arbitrary units)")
+title("Original signal with a running median filter applied")
+dev.off()
+
+
+pdf("/tmp/bwfpspec_plot.pdf",w=16,h=9)
+pspec_test <- pspectrum(bwf$trend)
+plot(pspec_test, xlab="Frequency (Hz)", ylab="Spectrum", main="Power spectrum from band-pass filtered signal")
+dev.off()
+
+pdf("/tmp/rmedpspec_plot.pdf",w=16,h=9)
+pspec_test <- pspectrum(ny)
+plot(pspec_test, xlab="Frequency (Hz)", ylab="Spectrum", main="Power spectrum from running median filtered signal")
+dev.off()
+
+pdf("/tmp/rmedfpeaks_plot.pdf",w=16,h=9)
+f <- seewave::fpeaks(pspec_test$spec, f=5,nmax=1, plot=T)
+abline(v=(f[1,1]), col="red")
+dev.off()
+
+
+pdf("/tmp/bwffpeaks_plot.pdf",w=16,h=9)
+pspec_test <- pspectrum(nyb)
+f <- seewave::fpeaks(pspec_test$spec, f=5,nmax=1, plot=T)
+abline(v=(f[1,1]), col="red")
+dev.off()
+
+######freq pdfs
+pdf("/tmp/freqc_bwf3.pdf",w=16,h=9)
+pltpspec
+dev.off()
+
+pltpspec <- ggplot(long_df,aes(y = fc, x =of,colour=method,shape=method)) +
+	geom_point() + geom_smooth(method="lm", fill=NA) + 
+	coord_cartesian(xlim = c(0, xmax+0.25), ylim = c(0, ymax+0.25)) +
+	geom_abline(group=1, colour="grey") + 
+	labs(x = "Reference frequency",
+       y = "Generated frequency",
+       title = "Calculated reference frequency vs algorithm generated frequency")
+
+pdf("/tmp/bwffpeaks_plot.pdf",w=16,h=9)
+f<-seewave::fpeaks(pspec_test$spec, f=5,nmax=1, plot=T, title=F)
+abline(v=(f[1,1]), col="red")
+ 
 

@@ -22,15 +22,15 @@
 
 py <- plotly()
 
-model <- lm(fc ~ reof + factor(method), data=long_df)
+model <- lm(fc ~ of + factor(method), data=long_df)
 grid <- with(long_df, expand.grid(
-  reof = seq(min(reof), max(reof), length = 3),
+  of = seq(min(of), max(of), length = 3),
   method = levels(factor(method))
 ))
 
 grid$fc <- stats::predict(model, newdata=grid)
 
-viz2 <- qplot(reof, fc, data=long_df, colour=factor(method)) + 
+viz2 <- qplot(of, fc, data=long_df, colour=factor(method)) + 
 geom_line(data=grid)
 out <- py$ggplotly(viz2, kwargs=list(filename="gg-line-scatter", fileopt="overwrite"))
 plotly_url <- out$response$url

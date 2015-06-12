@@ -66,20 +66,62 @@ freq_fun_bwfilter <- function(y, fs, dev=TRUE,...){
 }
 
 #generates, original spectra, power spectrum, and fpeaks
-freq_fun_pspec_bwfilter <- function(y, fs, dev=TRUE,...){
+freq_fun_pspec_bwfilter3 <- function(y, fs, dev=TRUE,...){
 	y <- ts(y,f=fs)
-	bwf <- bwfilter(y,freq=0.1,drift=TRUE)
-	pspec_test <- pspectrum(bwf$trend, x.frqsamp=fs)
-	f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1, plot=T, title=F)
+	bwf <- bwfilter(y,freq=3,drift=TRUE) 
+	pspec_test <- pspectrum(bwf$trend)
+	f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1, plot=F, title=F)
 	if(any(is.na(f))){
 		return(.0 + NA)
 		}
 		
 	if(dev == T){
 	
-		plot(y,type="l",...)
+		plot(y,type="l",xlab="Time (seconds)", ylab="Light intensity (arbitrary units)",...)
 		plot(pspec_test,...)
-		title(round((f[1,1]*1000), digits=3), "Hz")
+		#title(round((f[1,1]*1000), digits=3), "Hz")
+		abline(v=(f[1,1]), col="red")
+	}
+	
+	
+	return(f[1,1]*1000)
+}
+
+freq_fun_pspec_bwfilter5 <- function(y, fs, dev=TRUE,...){
+	y <- ts(y,f=fs)
+	bwf <- bwfilter(y,freq=5,drift=TRUE) 
+	pspec_test <- pspectrum(bwf$trend)
+	f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1, plot=F, title=F)
+	if(any(is.na(f))){
+		return(.0 + NA)
+		}
+		
+	if(dev == T){
+	
+		plot(y,type="l",xlab="Time (seconds)", ylab="Light intensity (arbitrary units)",...)
+		plot(pspec_test,...)
+		#title(round((f[1,1]*1000), digits=3), "Hz")
+		abline(v=(f[1,1]), col="red")
+	}
+	
+	
+	return(f[1,1]*1000)
+}
+
+freq_fun_pspec_bwfilter8 <- function(y, fs, dev=TRUE,...){
+	y <- ts(y,f=fs)
+	bwf <- bwfilter(y,freq=8,drift=TRUE) 
+	pspec_test <- pspectrum(bwf$trend)
+	f <- seewave::fpeaks(pspec_test$spec, f=fs,nmax=1, plot=F, title=F)
+	if(any(is.na(f))){
+		return(.0 + NA)
+		}
+		
+	if(dev == T){
+	
+		plot(y,type="l",xlab="Time (seconds)", ylab="Light intensity (arbitrary units)",...)
+		plot(pspec_test,...)
+		#title(round((f[1,1]*1000), digits=3), "Hz")
 		abline(v=(f[1,1]), col="red")
 	}
 	

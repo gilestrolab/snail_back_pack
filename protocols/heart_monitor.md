@@ -1,7 +1,7 @@
 Optical Snail Heart Rate Monitor
 ==================================
 
-**Quentin Geissmann**
+<iframe src="https://widgets.figshare.com/articles/1294198/embed?show_title=1" width="568" height="426" frameborder="0"></iframe>
 
 Monitoring physiological variables is crucial in many areas of biology.
 It is particularly difficult to study the physiology of small
